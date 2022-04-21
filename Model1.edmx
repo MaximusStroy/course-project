@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище RecruitmentAgencyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="applicants">
+          <Key>
+            <PropertyRef Name="ID_applicant" />
+          </Key>
+          <Property Name="ID_applicant" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lastname_applicant" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name_applicant" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="middlename_applicant" Type="nvarchar" MaxLength="50" />
+          <Property Name="number_phone_app" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="email_app" Type="nvarchar" MaxLength="50" />
+          <Property Name="birthday_app" Type="datetime" Nullable="false" />
+          <Property Name="gender_app" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="address_app" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ID_resume" Type="bigint" Nullable="false" />
+          <Property Name="ID_user" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="competencies">
+          <Key>
+            <PropertyRef Name="ID_competencies" />
+          </Key>
+          <Property Name="ID_competencies" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_comp" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employers">
+          <Key>
+            <PropertyRef Name="ID_employee" />
+          </Key>
+          <Property Name="ID_employee" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_employee" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="number_phone_emp" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="address_employee" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ID_user" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="responses">
+          <Key>
+            <PropertyRef Name="ID_respone" />
+          </Key>
+          <Property Name="ID_respone" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_vacancy" Type="bigint" Nullable="false" />
+          <Property Name="ID_resume" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="resume_tab">
+          <Key>
+            <PropertyRef Name="ID_resume" />
+          </Key>
+          <Property Name="ID_resume" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_applicant" Type="bigint" Nullable="false" />
+          <Property Name="skills" Type="nvarchar(max)" />
+          <Property Name="req_position" Type="nvarchar" MaxLength="20" />
+          <Property Name="ID_comp" Type="bigint" Nullable="false" />
+          <Property Name="req_salary" Type="money" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="types_users">
+          <Key>
+            <PropertyRef Name="ID_type_user" />
+          </Key>
+          <Property Name="ID_type_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_user" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login_user" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password_user" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_type_user" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vacancy">
+          <Key>
+            <PropertyRef Name="ID_vac" />
+          </Key>
+          <Property Name="ID_vac" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_competencies" Type="bigint" Nullable="false" />
+          <Property Name="work_experience" Type="int" />
+          <Property Name="ID_employee" Type="bigint" Nullable="false" />
+          <Property Name="post" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="salary" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_inv_ID_app">
+          <End Role="applicants" Type="Self.applicants" Multiplicity="1" />
+          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applicants">
+              <PropertyRef Name="ID_applicant" />
+            </Principal>
+            <Dependent Role="resume_tab">
+              <PropertyRef Name="ID_applicant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_comp">
+          <End Role="competencies" Type="Self.competencies" Multiplicity="1" />
+          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competencies">
+              <PropertyRef Name="ID_competencies" />
+            </Principal>
+            <Dependent Role="resume_tab">
+              <PropertyRef Name="ID_comp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_compVac">
+          <End Role="competencies" Type="Self.competencies" Multiplicity="1" />
+          <End Role="vacancy" Type="Self.vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competencies">
+              <PropertyRef Name="ID_competencies" />
+            </Principal>
+            <Dependent Role="vacancy">
+              <PropertyRef Name="ID_competencies" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_employee">
+          <End Role="employers" Type="Self.employers" Multiplicity="1" />
+          <End Role="vacancy" Type="Self.vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employers">
+              <PropertyRef Name="ID_employee" />
+            </Principal>
+            <Dependent Role="vacancy">
+              <PropertyRef Name="ID_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_res">
+          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="1" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume_tab">
+              <PropertyRef Name="ID_resume" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="ID_resume" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_type">
+          <End Role="types_users" Type="Self.types_users" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="types_users">
+              <PropertyRef Name="ID_type_user" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="ID_type_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_usOne">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="employers" Type="Self.employers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="employers">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_usTwo">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="applicants">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_vac">
+          <End Role="vacancy" Type="Self.vacancy" Multiplicity="1" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vacancy">
+              <PropertyRef Name="ID_vac" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="ID_vacancy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище RecruitmentAgencyModelContainer">
+          <EntitySet Name="applicants" EntityType="Self.applicants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="competencies" EntityType="Self.competencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employers" EntityType="Self.employers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="responses" EntityType="Self.responses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="resume_tab" EntityType="Self.resume_tab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="types_users" EntityType="Self.types_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vacancy" EntityType="Self.vacancy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_inv_ID_app" Association="Self.fk_inv_ID_app">
+            <End Role="applicants" EntitySet="applicants" />
+            <End Role="resume_tab" EntitySet="resume_tab" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_comp" Association="Self.fk_inv_ID_comp">
+            <End Role="competencies" EntitySet="competencies" />
+            <End Role="resume_tab" EntitySet="resume_tab" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_compVac" Association="Self.fk_inv_ID_compVac">
+            <End Role="competencies" EntitySet="competencies" />
+            <End Role="vacancy" EntitySet="vacancy" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_employee" Association="Self.fk_inv_ID_employee">
+            <End Role="employers" EntitySet="employers" />
+            <End Role="vacancy" EntitySet="vacancy" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_res" Association="Self.fk_inv_ID_res">
+            <End Role="resume_tab" EntitySet="resume_tab" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_type" Association="Self.fk_inv_ID_type">
+            <End Role="types_users" EntitySet="types_users" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_usOne" Association="Self.fk_inv_ID_usOne">
+            <End Role="users" EntitySet="users" />
+            <End Role="employers" EntitySet="employers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_usTwo" Association="Self.fk_inv_ID_usTwo">
+            <End Role="users" EntitySet="users" />
+            <End Role="applicants" EntitySet="applicants" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_vac" Association="Self.fk_inv_ID_vac">
+            <End Role="vacancy" EntitySet="vacancy" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecruitmentAgencyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="applicant">
+          <Key>
+            <PropertyRef Name="ID_applicant" />
+          </Key>
+          <Property Name="ID_applicant" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lastname_applicant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_applicant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middlename_applicant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="number_phone_app" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email_app" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="birthday_app" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="gender_app" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address_app" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_resume" Type="Int64" Nullable="false" />
+          <Property Name="ID_user" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="resume_tab" Relationship="Self.fk_inv_ID_app" FromRole="applicants" ToRole="resume_tab" />
+          <NavigationProperty Name="user" Relationship="Self.fk_inv_ID_usTwo" FromRole="applicants" ToRole="users" />
+        </EntityType>
+        <EntityType Name="competency">
+          <Key>
+            <PropertyRef Name="ID_competencies" />
+          </Key>
+          <Property Name="ID_competencies" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_comp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="resume_tab" Relationship="Self.fk_inv_ID_comp" FromRole="competencies" ToRole="resume_tab" />
+          <NavigationProperty Name="vacancies" Relationship="Self.fk_inv_ID_compVac" FromRole="competencies" ToRole="vacancy" />
+        </EntityType>
+        <EntityType Name="employer">
+          <Key>
+            <PropertyRef Name="ID_employee" />
+          </Key>
+          <Property Name="ID_employee" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_employee" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number_phone_emp" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address_employee" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_user" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="vacancies" Relationship="Self.fk_inv_ID_employee" FromRole="employers" ToRole="vacancy" />
+          <NavigationProperty Name="user" Relationship="Self.fk_inv_ID_usOne" FromRole="employers" ToRole="users" />
+        </EntityType>
+        <EntityType Name="respons">
+          <Key>
+            <PropertyRef Name="ID_respone" />
+          </Key>
+          <Property Name="ID_respone" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_vacancy" Type="Int64" Nullable="false" />
+          <Property Name="ID_resume" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="resume_tab" Relationship="Self.fk_inv_ID_res" FromRole="responses" ToRole="resume_tab" />
+          <NavigationProperty Name="vacancy" Relationship="Self.fk_inv_ID_vac" FromRole="responses" ToRole="vacancy" />
+        </EntityType>
+        <EntityType Name="resume_tab">
+          <Key>
+            <PropertyRef Name="ID_resume" />
+          </Key>
+          <Property Name="ID_resume" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_applicant" Type="Int64" Nullable="false" />
+          <Property Name="skills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="req_position" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ID_comp" Type="Int64" Nullable="false" />
+          <Property Name="req_salary" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="applicant" Relationship="Self.fk_inv_ID_app" FromRole="resume_tab" ToRole="applicants" />
+          <NavigationProperty Name="competency" Relationship="Self.fk_inv_ID_comp" FromRole="resume_tab" ToRole="competencies" />
+          <NavigationProperty Name="responses" Relationship="Self.fk_inv_ID_res" FromRole="resume_tab" ToRole="responses" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="types_users">
+          <Key>
+            <PropertyRef Name="ID_type_user" />
+          </Key>
+          <Property Name="ID_type_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.fk_inv_ID_type" FromRole="types_users" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_user" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_type_user" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="applicants" Relationship="Self.fk_inv_ID_usTwo" FromRole="users" ToRole="applicants" />
+          <NavigationProperty Name="employers" Relationship="Self.fk_inv_ID_usOne" FromRole="users" ToRole="employers" />
+          <NavigationProperty Name="types_users" Relationship="Self.fk_inv_ID_type" FromRole="users" ToRole="types_users" />
+        </EntityType>
+        <EntityType Name="vacancy">
+          <Key>
+            <PropertyRef Name="ID_vac" />
+          </Key>
+          <Property Name="ID_vac" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_competencies" Type="Int64" Nullable="false" />
+          <Property Name="work_experience" Type="Int32" />
+          <Property Name="ID_employee" Type="Int64" Nullable="false" />
+          <Property Name="post" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="competency" Relationship="Self.fk_inv_ID_compVac" FromRole="vacancy" ToRole="competencies" />
+          <NavigationProperty Name="employer" Relationship="Self.fk_inv_ID_employee" FromRole="vacancy" ToRole="employers" />
+          <NavigationProperty Name="responses" Relationship="Self.fk_inv_ID_vac" FromRole="vacancy" ToRole="responses" />
+        </EntityType>
+        <Association Name="fk_inv_ID_app">
+          <End Role="applicants" Type="Self.applicant" Multiplicity="1" />
+          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applicants">
+              <PropertyRef Name="ID_applicant" />
+            </Principal>
+            <Dependent Role="resume_tab">
+              <PropertyRef Name="ID_applicant" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_usTwo">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="applicants">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_comp">
+          <End Role="competencies" Type="Self.competency" Multiplicity="1" />
+          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competencies">
+              <PropertyRef Name="ID_competencies" />
+            </Principal>
+            <Dependent Role="resume_tab">
+              <PropertyRef Name="ID_comp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_compVac">
+          <End Role="competencies" Type="Self.competency" Multiplicity="1" />
+          <End Role="vacancy" Type="Self.vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competencies">
+              <PropertyRef Name="ID_competencies" />
+            </Principal>
+            <Dependent Role="vacancy">
+              <PropertyRef Name="ID_competencies" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_employee">
+          <End Role="employers" Type="Self.employer" Multiplicity="1" />
+          <End Role="vacancy" Type="Self.vacancy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employers">
+              <PropertyRef Name="ID_employee" />
+            </Principal>
+            <Dependent Role="vacancy">
+              <PropertyRef Name="ID_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_usOne">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="employers" Type="Self.employer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="employers">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_res">
+          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="1" />
+          <End Role="responses" Type="Self.respons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume_tab">
+              <PropertyRef Name="ID_resume" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="ID_resume" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_vac">
+          <End Role="vacancy" Type="Self.vacancy" Multiplicity="1" />
+          <End Role="responses" Type="Self.respons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vacancy">
+              <PropertyRef Name="ID_vac" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="ID_vacancy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inv_ID_type">
+          <End Role="types_users" Type="Self.types_users" Multiplicity="1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="types_users">
+              <PropertyRef Name="ID_type_user" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="ID_type_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecruitmentAgencyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="applicants" EntityType="Self.applicant" />
+          <EntitySet Name="competencies" EntityType="Self.competency" />
+          <EntitySet Name="employers" EntityType="Self.employer" />
+          <EntitySet Name="responses" EntityType="Self.respons" />
+          <EntitySet Name="resume_tab" EntityType="Self.resume_tab" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="types_users" EntityType="Self.types_users" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="vacancies" EntityType="Self.vacancy" />
+          <AssociationSet Name="fk_inv_ID_app" Association="Self.fk_inv_ID_app">
+            <End Role="applicants" EntitySet="applicants" />
+            <End Role="resume_tab" EntitySet="resume_tab" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_usTwo" Association="Self.fk_inv_ID_usTwo">
+            <End Role="users" EntitySet="users" />
+            <End Role="applicants" EntitySet="applicants" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_comp" Association="Self.fk_inv_ID_comp">
+            <End Role="competencies" EntitySet="competencies" />
+            <End Role="resume_tab" EntitySet="resume_tab" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_compVac" Association="Self.fk_inv_ID_compVac">
+            <End Role="competencies" EntitySet="competencies" />
+            <End Role="vacancy" EntitySet="vacancies" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_employee" Association="Self.fk_inv_ID_employee">
+            <End Role="employers" EntitySet="employers" />
+            <End Role="vacancy" EntitySet="vacancies" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_usOne" Association="Self.fk_inv_ID_usOne">
+            <End Role="users" EntitySet="users" />
+            <End Role="employers" EntitySet="employers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_res" Association="Self.fk_inv_ID_res">
+            <End Role="resume_tab" EntitySet="resume_tab" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_vac" Association="Self.fk_inv_ID_vac">
+            <End Role="vacancy" EntitySet="vacancies" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inv_ID_type" Association="Self.fk_inv_ID_type">
+            <End Role="types_users" EntitySet="types_users" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RecruitmentAgencyModelContainer" CdmEntityContainer="RecruitmentAgencyEntities">
+          <EntitySetMapping Name="applicants">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.applicant">
+              <MappingFragment StoreEntitySet="applicants">
+                <ScalarProperty Name="ID_applicant" ColumnName="ID_applicant" />
+                <ScalarProperty Name="lastname_applicant" ColumnName="lastname_applicant" />
+                <ScalarProperty Name="name_applicant" ColumnName="name_applicant" />
+                <ScalarProperty Name="middlename_applicant" ColumnName="middlename_applicant" />
+                <ScalarProperty Name="number_phone_app" ColumnName="number_phone_app" />
+                <ScalarProperty Name="email_app" ColumnName="email_app" />
+                <ScalarProperty Name="birthday_app" ColumnName="birthday_app" />
+                <ScalarProperty Name="gender_app" ColumnName="gender_app" />
+                <ScalarProperty Name="address_app" ColumnName="address_app" />
+                <ScalarProperty Name="ID_resume" ColumnName="ID_resume" />
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="competencies">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.competency">
+              <MappingFragment StoreEntitySet="competencies">
+                <ScalarProperty Name="ID_competencies" ColumnName="ID_competencies" />
+                <ScalarProperty Name="Name_comp" ColumnName="Name_comp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employers">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.employer">
+              <MappingFragment StoreEntitySet="employers">
+                <ScalarProperty Name="ID_employee" ColumnName="ID_employee" />
+                <ScalarProperty Name="name_employee" ColumnName="name_employee" />
+                <ScalarProperty Name="number_phone_emp" ColumnName="number_phone_emp" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="address_employee" ColumnName="address_employee" />
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="responses">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.respons">
+              <MappingFragment StoreEntitySet="responses">
+                <ScalarProperty Name="ID_respone" ColumnName="ID_respone" />
+                <ScalarProperty Name="ID_vacancy" ColumnName="ID_vacancy" />
+                <ScalarProperty Name="ID_resume" ColumnName="ID_resume" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resume_tab">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.resume_tab">
+              <MappingFragment StoreEntitySet="resume_tab">
+                <ScalarProperty Name="ID_resume" ColumnName="ID_resume" />
+                <ScalarProperty Name="ID_applicant" ColumnName="ID_applicant" />
+                <ScalarProperty Name="skills" ColumnName="skills" />
+                <ScalarProperty Name="req_position" ColumnName="req_position" />
+                <ScalarProperty Name="ID_comp" ColumnName="ID_comp" />
+                <ScalarProperty Name="req_salary" ColumnName="req_salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="types_users">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.types_users">
+              <MappingFragment StoreEntitySet="types_users">
+                <ScalarProperty Name="ID_type_user" ColumnName="ID_type_user" />
+                <ScalarProperty Name="name_type" ColumnName="name_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="login_user" ColumnName="login_user" />
+                <ScalarProperty Name="password_user" ColumnName="password_user" />
+                <ScalarProperty Name="ID_type_user" ColumnName="ID_type_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vacancies">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.vacancy">
+              <MappingFragment StoreEntitySet="vacancy">
+                <ScalarProperty Name="ID_vac" ColumnName="ID_vac" />
+                <ScalarProperty Name="ID_competencies" ColumnName="ID_competencies" />
+                <ScalarProperty Name="work_experience" ColumnName="work_experience" />
+                <ScalarProperty Name="ID_employee" ColumnName="ID_employee" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

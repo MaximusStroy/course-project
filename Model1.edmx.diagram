@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a2eb2bec67b342ab8de3e39f260f6fc1" Name="Diagram1">
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.applicant" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.competency" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.employer" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.respons" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.resume_tab" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.sysdiagram" Width="1.5" PointX="3.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.types_users" Width="1.5" PointX="1.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.user" Width="1.5" PointX="1.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RecruitmentAgencyModel.vacancy" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_app" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_usTwo" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_comp" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_compVac" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_usOne" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_res" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_vac" ManuallyRouted="false" />
+        <AssociationConnector Association="RecruitmentAgencyModel.fk_inv_ID_type" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
