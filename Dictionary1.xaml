@@ -1,0 +1,80 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Текст -->
+    <SolidColorBrush x:Key="theDarkest">#003B46</SolidColorBrush>
+    <!-- Пока не используется -->
+    <SolidColorBrush x:Key="dark">#07575b</SolidColorBrush>
+    <!-- Фон кнопки -->
+    <SolidColorBrush x:Key="light">#66a5ad</SolidColorBrush>
+    <!-- Главный фон -->
+    <SolidColorBrush x:Key="theLightest">#c4dfe6</SolidColorBrush>
+
+    <SolidColorBrush x:Key="back">White</SolidColorBrush>
+    
+    <Style x:Key="buttonStyle" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="{DynamicResource light}"/>
+        <Setter Property="Foreground" Value="{DynamicResource theDarkest}"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Comfortaa"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="textblockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/Fonts/#Comfortaa"/>
+        <Setter Property="Foreground" Value="{DynamicResource theDarkest}"/>
+    </Style>
+
+    <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+    <Style x:Key="borderStyle" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource theDarkest}"/>
+        <Setter Property="Width" Value="250"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="listStyle" TargetType="ListView">
+        <Setter Property="Background" Value="{DynamicResource theLightest}"/>
+    </Style>
+
+    <Style x:Key="boxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource theLightest}"/>
+        <Setter Property="Foreground" Value="{DynamicResource theDarkest}"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Comfortaa"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource theDarkest}"/>
+        <!--<Setter Property="Height" Value="30"/>-->
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="passStyle" TargetType="PasswordBox">
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="AllowDrop" Value="True"/>
+        <Setter Property="Background" Value="{DynamicResource theLightest}"/>
+        <Setter Property="Foreground" Value="{DynamicResource theDarkest}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource theDarkest}"/>
+    </Style>
+
+    <Style x:Key="comboboxStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{DynamicResource light}"/>
+        <Setter Property="Foreground" Value="{DynamicResource theDarkest}"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Comfortaa"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Width" Value="400"/>
+    </Style>
+    
+    
+</ResourceDictionary>

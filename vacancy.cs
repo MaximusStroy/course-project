@@ -17,7 +17,7 @@ namespace Vacancy
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public vacancy()
         {
-            this.responses = new HashSet<respons>();
+            this.responses = new HashSet<responses>();
         }
     
         public long ID_vac { get; set; }
@@ -27,9 +27,9 @@ namespace Vacancy
         public string post { get; set; }
         public decimal salary { get; set; }
     
-        public virtual competency competency { get; set; }
-        public virtual employer employer { get; set; }
+        public virtual competencies competencies { get; set; }
+        public virtual employers employers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<respons> responses { get; set; }
+        public virtual ICollection<responses> responses { get; set; }
     }
 }

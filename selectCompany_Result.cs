@@ -10,20 +10,17 @@
 namespace Vacancy
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class types_users
+    public partial class selectCompany_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public types_users()
-        {
-            this.users = new HashSet<users>();
-        }
-    
-        public int ID_type_user { get; set; }
-        public string name_type { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public string company { get; set; }
+        public string address_company { get; set; }
+        public string phone_company { get; set; }
+        public string title { get; set; }
+        public string name_competencies { get; set; }
+        public string name_employee { get; set; }
+        public string post { get; set; }
+        public decimal salary { get; set; }
+        public string phone_emp { get; set; }
     }
 }

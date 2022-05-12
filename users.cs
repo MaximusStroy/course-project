@@ -12,18 +12,24 @@ namespace Vacancy
     using System;
     using System.Collections.Generic;
     
-    public partial class types_users
+    public partial class users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public types_users()
+        public users()
         {
-            this.users = new HashSet<users>();
+            this.applicants = new HashSet<applicants>();
+            this.employers = new HashSet<employers>();
         }
     
+        public long ID_user { get; set; }
+        public string login_user { get; set; }
+        public string password_user { get; set; }
         public int ID_type_user { get; set; }
-        public string name_type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public virtual ICollection<applicants> applicants { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employers> employers { get; set; }
+        public virtual types_users types_users { get; set; }
     }
 }

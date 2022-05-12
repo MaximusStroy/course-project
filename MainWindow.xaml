@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:Vacancy"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Work Service"
+        Icon="Images/job1.jpg"
+        Height="450" Width="800" Closed="Window_Closed">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -19,6 +22,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Frame
+            Background="#C4DFE6"
             Name="frame"
             Margin="5"
             BorderBrush="Black"

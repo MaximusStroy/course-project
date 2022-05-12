@@ -12,24 +12,29 @@ namespace Vacancy
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class applicants
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
+        public applicants()
         {
-            this.applicants = new HashSet<applicant>();
-            this.employers = new HashSet<employer>();
+            this.resume_tab = new HashSet<resume_tab>();
         }
     
+        public long ID_applicant { get; set; }
+        public string lastname_applicant { get; set; }
+        public string name_applicant { get; set; }
+        public string middlename_applicant { get; set; }
+        public string number_phone_app { get; set; }
+        public string email_app { get; set; }
+        public System.DateTime birthday_app { get; set; }
+        public string gender_app { get; set; }
+        public string address_app { get; set; }
+        public Nullable<long> ID_resume { get; set; }
         public long ID_user { get; set; }
-        public string login_user { get; set; }
-        public string password_user { get; set; }
-        public int ID_type_user { get; set; }
+        public byte[] imageData { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<applicant> applicants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employer> employers { get; set; }
-        public virtual types_users types_users { get; set; }
+        public virtual ICollection<resume_tab> resume_tab { get; set; }
+        public virtual users users { get; set; }
     }
 }

@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Vacancy.Pages" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      x:Class="Vacancy.Pages.ResumeAppPage" 
+      mc:Ignorable="d" 
+      xml:lang="ru" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800" 
+      Title="ResumeAppPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border Style="{DynamicResource borderStyle}" Grid.Column="0" Width="auto" Grid.Row="0">
+            <ListView Style="{DynamicResource listStyle}" Background="#c4DFE6" x:Name="listRes" HorizontalAlignment="Center" SelectionChanged="listRes_SelectionChanged">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{DynamicResource myHeaderStyle}">
+                        <GridView.Columns>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{DynamicResource borderStyle}">
+                                            <StackPanel>
+                                                <TextBlock Margin="5" Style="{DynamicResource textblockStyle}" Text="{Binding req_position}" />
+                                                <TextBlock Margin="5" Style="{DynamicResource textblockStyle}" Text="{Binding StringFormat=\{0:C0\}, Path=req_salary}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0">
+            <Button Style="{DynamicResource buttonStyle}" Content="Создать резюме" Margin="10" Width="120" Height="30" x:Name="btnCreateResume" Click="btnCreateResume_Click"/>
+            <Button Style="{DynamicResource buttonStyle}" Content="Удалить резюме" Margin="10" Width="120" Height="30" x:Name="btnDeleteResume" Click="btnDeleteResume_Click"/>
+        </StackPanel>
+        <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Width="auto" HorizontalAlignment="Stretch" Style="{DynamicResource borderStyle}">
+            <!--<StackPanel Grid.Column="1">-->
+            <ScrollViewer Grid.Column="1" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Hidden" Width="auto" x:Name="scrollRes">
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Style="{DynamicResource textblockStyle}" FontWeight="Bold" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Text="Резюме №" />
+                        <TextBlock Style="{DynamicResource textblockStyle}" x:Name="txt_numResume" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
+                    </StackPanel>
+                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="#003b46" Height="1" Margin="20,5"/>
+                    <TextBlock Text="КОНТАКТНАЯ ИНФОРМАЦИЯ" Margin="10" Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" FontSize="16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Фамилия" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Bottom" Text="Имя" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Отчество" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Дата рождения" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Город" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Номер телефона" />
+                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" Height="30" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Почта" />
+
+                        <TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_lastname" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_name" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_middlename" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_birth" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_city" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_phone" />
+                        <TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource boxStyle}" IsEnabled="False" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_mail" />
+                    </Grid>
+                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="#003b46" Height="1" Margin="20,5"/>
+                    <TextBlock Text="СВОДКА" Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" FontSize="16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBox MinHeight="30" Style="{DynamicResource boxStyle}" Margin="20,5" VerticalAlignment="Center" x:Name="txtSummary" TextWrapping="Wrap"
+                             HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <TextBlock Text="Требуемая должность" Style="{DynamicResource textblockStyle}" Grid.Column="0"
+                                   Grid.Row="1" FontSize="16" TextWrapping="Wrap" Margin="20,5"/>
+                        <TextBlock Text="Требуемый доход" Style="{DynamicResource textblockStyle}" Grid.Column="0"
+                                   Grid.Row="2" FontSize="16" TextWrapping="Wrap" Margin="20,5"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txtSummaryPost"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txtSummarySalary"/>
+                    </Grid>
+                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="#003b46" Height="1" Margin="20,5"/>
+                    <TextBlock Text="ОПЫТ РАБОТЫ" Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" FontSize="16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Последнее место работы" Style="{DynamicResource textblockStyle}" Margin="20,5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center" FontSize="16"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Должность"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Описание работы"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Годы работы"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtExperPost"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtExperTitle"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtExperDate"/>
+                    </Grid>
+                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="#003b46" Height="1" Margin="20,5"/>
+                    <TextBlock Text="ОБРАЗОВАНИЕ" Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" FontSize="16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Образовательное учреждение"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="NoWrap" Text="Специальность"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Год окончания"/>
+                        <TextBox Grid.Row="0" Grid.Column="2" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtNameEducation" Grid.ColumnSpan="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtSpecialEducation" Grid.ColumnSpan="2"/>
+                        <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtYearEndEducation" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="#003b46" Height="1" Margin="20,5"/>
+                    <TextBlock Text="О СЕБЕ" Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" FontSize="16"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Профессиональные навыки"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource textblockStyle}" Margin="20,5" FontSize="16" TextWrapping="Wrap" Text="Знание языков"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1">
+                            <TextBlock Style="{DynamicResource textblockStyle}" HorizontalAlignment="Left" Margin="20,5" TextWrapping="Wrap" Text="*Записать через запятую (UNIX, MS Office, ...)" FontStyle="Italic" VerticalAlignment="Bottom"/>
+                            <TextBox Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtSkills"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <TextBlock Style="{DynamicResource textblockStyle}" Margin="20,5" TextWrapping="Wrap" Text="*Записать через запятую (Английский язык (A2), Французский язык (B1), ...)" FontStyle="Italic" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                            <TextBox  Style="{DynamicResource boxStyle}" MinHeight="30" Margin="20,5" HorizontalAlignment="Stretch" TextWrapping="Wrap" x:Name="txtLanguages"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Margin="10" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button Style="{DynamicResource buttonStyle}" x:Name="btnChangeResume" Content="Изменить" Height="30" Width="200" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Click="btnChangeResume_Click" />
+                        <Button Style="{DynamicResource buttonStyle}" x:Name="btnChangeSave" Margin="5" Height="30" Width="120" Content="Сохранить" FontSize="16" Click="btnChangeSave_Click" />
+                        <Button Style="{DynamicResource buttonStyle}" x:Name="btnChangeCancel" Margin="5" Height="30" Width="120" HorizontalAlignment="Stretch" Content="Отменить" FontSize="16" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+            <!--</StackPanel>-->
+        </Border>
+    </Grid>
+</Page>

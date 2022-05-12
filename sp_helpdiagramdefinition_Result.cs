@@ -10,15 +10,10 @@
 namespace Vacancy
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class respons
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public long ID_respone { get; set; }
-        public long ID_vacancy { get; set; }
-        public long ID_resume { get; set; }
-    
-        public virtual resume_tab resume_tab { get; set; }
-        public virtual vacancy vacancy { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

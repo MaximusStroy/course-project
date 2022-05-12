@@ -10,30 +10,17 @@
 namespace Vacancy
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class applicant
+    public partial class selectProfile_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public applicant()
-        {
-            this.resume_tab = new HashSet<resume_tab>();
-        }
-    
-        public long ID_applicant { get; set; }
         public string lastname_applicant { get; set; }
         public string name_applicant { get; set; }
         public string middlename_applicant { get; set; }
         public string number_phone_app { get; set; }
         public string email_app { get; set; }
         public System.DateTime birthday_app { get; set; }
-        public string gender_app { get; set; }
         public string address_app { get; set; }
-        public long ID_resume { get; set; }
         public long ID_user { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<resume_tab> resume_tab { get; set; }
-        public virtual user user { get; set; }
+        public byte[] imageData { get; set; }
     }
 }

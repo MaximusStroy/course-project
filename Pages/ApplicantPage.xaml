@@ -8,8 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ApplicantPage">
 
-    <Grid
-        Background="White">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
@@ -27,37 +26,42 @@
             Orientation="Vertical"
             Width="auto">
             <Button x:Name="btn_myProfile"
+                Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="Мой профиль" Click="btn_myProfile_Click"/>
-            <Button
+                Content="МОЙ ПРОФИЛЬ" Click="btn_myProfile_Click"/>
+            <Button x:Name="btn_myResume"
+                Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="Мои резюме"/>
+                Content="МОИ РЕЗЮМЕ" Click="btn_myResume_Click"/>
             <Button x:Name="btn_vacancy"
+                Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="Вакансии" Click="btn_vacancy_Click"/>
+                Content="ВАКАНСИИ" Click="btn_vacancy_Click"/>
             <Button
+                Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="Отклики"/>
+                Content="ОТКЛИКИ"/>
         </StackPanel>
         <Button x:Name="btn_Exit"
+                Style="{DynamicResource buttonStyle}"
             Grid.Column="0"
             Grid.Row="2"
             Height="30"
             Width="150"
             Margin="10"
-            Content="Выйти"
+            Content="ВЫЙТИ"
             FontSize="16" Click="btn_Exit_Click"/>
         <Frame
             Name="frameApp"

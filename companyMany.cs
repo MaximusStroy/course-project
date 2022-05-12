@@ -12,18 +12,21 @@ namespace Vacancy
     using System;
     using System.Collections.Generic;
     
-    public partial class types_users
+    public partial class companyMany
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public types_users()
+        public companyMany()
         {
-            this.users = new HashSet<users>();
+            this.employers = new HashSet<employers>();
         }
     
-        public int ID_type_user { get; set; }
-        public string name_type { get; set; }
+        public int ID_company { get; set; }
+        public string name_company { get; set; }
+        public string address_company { get; set; }
+        public string phone_company { get; set; }
+        public string title_company { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public virtual ICollection<employers> employers { get; set; }
     }
 }

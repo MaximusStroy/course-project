@@ -8,8 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ChangeStatusPage">
 
-    <Grid
-        Background="White">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -24,26 +23,32 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock
+            Style="{DynamicResource textblockStyle}"
             Grid.Column="1"
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Text="ВОЙТИ КАК"
             FontSize="30"
             VerticalAlignment="Center"
-            HorizontalAlignment="Center"/>
+            HorizontalAlignment="Center" 
+            FontWeight="Bold"/>
         <Button
+            Style="{DynamicResource buttonStyle}"
             Name="LogInApplicantBtn"
             Grid.Column="1"
+            FontWeight="Bold"
             Grid.Row="2"
             FontSize="16"
-            Content="Соискатель"
-            Margin="10" Click="LogInApplicantBtn_Click"/>
+            Content="СОИСКАТЕЛЬ"
+            Margin="5" Click="LogInApplicantBtn_Click"/>
         <Button
+            Style="{DynamicResource buttonStyle}"
             Name="LogInEmployerBtn"
             Grid.Column="2"
+            FontWeight="Bold"
             Grid.Row="2"
             FontSize="16"
-            Content="Работодатель"
-            Margin="10" Click="LogInEmployerBtn_Click"/>
+            Content="РАБОТОДАТЕЛЬ"
+            Margin="5" Click="LogInEmployerBtn_Click"/>
     </Grid>
 </Page>

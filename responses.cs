@@ -12,18 +12,13 @@ namespace Vacancy
     using System;
     using System.Collections.Generic;
     
-    public partial class types_users
+    public partial class responses
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public types_users()
-        {
-            this.users = new HashSet<users>();
-        }
+        public long ID_respone { get; set; }
+        public long ID_vacancy { get; set; }
+        public long ID_resume { get; set; }
     
-        public int ID_type_user { get; set; }
-        public string name_type { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public virtual resume_tab resume_tab { get; set; }
+        public virtual vacancy vacancy { get; set; }
     }
 }

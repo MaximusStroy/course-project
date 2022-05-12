@@ -18,15 +18,26 @@
           <Property Name="birthday_app" Type="datetime" Nullable="false" />
           <Property Name="gender_app" Type="nvarchar" MaxLength="3" Nullable="false" />
           <Property Name="address_app" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="ID_resume" Type="bigint" Nullable="false" />
+          <Property Name="ID_resume" Type="bigint" />
           <Property Name="ID_user" Type="bigint" Nullable="false" />
+          <Property Name="imageData" Type="image" />
+        </EntityType>
+        <EntityType Name="companyMany">
+          <Key>
+            <PropertyRef Name="ID_company" />
+          </Key>
+          <Property Name="ID_company" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_company" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="address_company" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="phone_company" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="title_company" Type="text" />
         </EntityType>
         <EntityType Name="competencies">
           <Key>
             <PropertyRef Name="ID_competencies" />
           </Key>
           <Property Name="ID_competencies" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name_comp" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name_comp" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="employers">
           <Key>
@@ -35,7 +46,7 @@
           <Property Name="ID_employee" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name_employee" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="number_phone_emp" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ID_company" Type="int" />
           <Property Name="address_employee" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="ID_user" Type="bigint" Nullable="false" />
         </EntityType>
@@ -53,10 +64,12 @@
           </Key>
           <Property Name="ID_resume" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_applicant" Type="bigint" Nullable="false" />
-          <Property Name="skills" Type="nvarchar(max)" />
           <Property Name="req_position" Type="nvarchar" MaxLength="20" />
-          <Property Name="ID_comp" Type="bigint" Nullable="false" />
           <Property Name="req_salary" Type="money" />
+          <Property Name="summary" Type="nvarchar" MaxLength="255" />
+          <Property Name="workExperience" Type="nvarchar(max)" />
+          <Property Name="education" Type="nvarchar(max)" />
+          <Property Name="skills" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -95,6 +108,18 @@
           <Property Name="post" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="salary" Type="money" Nullable="false" />
         </EntityType>
+        <Association Name="fk_inv_company">
+          <End Role="companyMany" Type="Self.companyMany" Multiplicity="0..1" />
+          <End Role="employers" Type="Self.employers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companyMany">
+              <PropertyRef Name="ID_company" />
+            </Principal>
+            <Dependent Role="employers">
+              <PropertyRef Name="ID_company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_inv_ID_app">
           <End Role="applicants" Type="Self.applicants" Multiplicity="1" />
           <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
@@ -104,18 +129,6 @@
             </Principal>
             <Dependent Role="resume_tab">
               <PropertyRef Name="ID_applicant" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_inv_ID_comp">
-          <End Role="competencies" Type="Self.competencies" Multiplicity="1" />
-          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="competencies">
-              <PropertyRef Name="ID_competencies" />
-            </Principal>
-            <Dependent Role="resume_tab">
-              <PropertyRef Name="ID_comp" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -203,8 +216,130 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="dropResume" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idRes" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="procStr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="s" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="stroka" Type="nvarchar" MaxLength="55" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="selectCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idEmp" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="company" Type="nvarchar" MaxLength="255" Nullable="false" />
+                <Property Name="address_company" Type="nvarchar" MaxLength="255" Nullable="false" />
+                <Property Name="phone_company" Type="nvarchar" MaxLength="15" Nullable="false" />
+                <Property Name="title" Type="text" />
+                <Property Name="name_competencies" Type="text" Nullable="false" />
+                <Property Name="name_employee" Type="nvarchar" MaxLength="255" Nullable="false" />
+                <Property Name="post" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="salary" Type="money" Nullable="false" />
+                <Property Name="phone_emp" Type="nvarchar" MaxLength="15" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="selectProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_idUser" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="lastname_applicant" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="name_applicant" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="middlename_applicant" Type="nvarchar" MaxLength="50" />
+                <Property Name="number_phone_app" Type="nvarchar" MaxLength="15" Nullable="false" />
+                <Property Name="email_app" Type="nvarchar" MaxLength="50" />
+                <Property Name="birthday_app" Type="datetime" Nullable="false" />
+                <Property Name="address_app" Type="nvarchar" MaxLength="255" Nullable="false" />
+                <Property Name="ID_user" Type="bigint" Nullable="false" />
+                <Property Name="imageData" Type="image" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="selectResume" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idRes" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="resumeID" Type="bigint" Nullable="false" />
+                <Property Name="appID" Type="bigint" Nullable="false" />
+                <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="middlename" Type="nvarchar" MaxLength="50" />
+                <Property Name="phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+                <Property Name="mail" Type="nvarchar" MaxLength="50" />
+                <Property Name="birthday" Type="datetime" Nullable="false" />
+                <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+                <Property Name="summary" Type="nvarchar" MaxLength="255" />
+                <Property Name="reqSalary" Type="money" />
+                <Property Name="reqPost" Type="nvarchar" MaxLength="20" />
+                <Property Name="skill" Type="nvarchar(max)" />
+                <Property Name="lang" Type="nvarchar(max)" />
+                <Property Name="education" Type="nvarchar" MaxLength="4000" />
+                <Property Name="specialEducation" Type="nvarchar" MaxLength="4000" />
+                <Property Name="yearEndEducation" Type="nvarchar" MaxLength="4000" />
+                <Property Name="postWorkEx" Type="nvarchar" MaxLength="4000" />
+                <Property Name="working" Type="nvarchar" MaxLength="4000" />
+                <Property Name="yearStartWork" Type="nvarchar" MaxLength="4000" />
+                <Property Name="yearEndWork" Type="nvarchar" MaxLength="4000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="selectVacancy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name_company" Type="nvarchar" MaxLength="255" Nullable="false" />
+                <Property Name="post" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="salary" Type="money" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище RecruitmentAgencyModelContainer">
           <EntitySet Name="applicants" EntityType="Self.applicants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="companyMany" EntityType="Self.companyMany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="competencies" EntityType="Self.competencies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="employers" EntityType="Self.employers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="responses" EntityType="Self.responses" Schema="dbo" store:Type="Tables" />
@@ -213,12 +348,12 @@
           <EntitySet Name="types_users" EntityType="Self.types_users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vacancy" EntityType="Self.vacancy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_inv_company" Association="Self.fk_inv_company">
+            <End Role="companyMany" EntitySet="companyMany" />
+            <End Role="employers" EntitySet="employers" />
+          </AssociationSet>
           <AssociationSet Name="fk_inv_ID_app" Association="Self.fk_inv_ID_app">
             <End Role="applicants" EntitySet="applicants" />
-            <End Role="resume_tab" EntitySet="resume_tab" />
-          </AssociationSet>
-          <AssociationSet Name="fk_inv_ID_comp" Association="Self.fk_inv_ID_comp">
-            <End Role="competencies" EntitySet="competencies" />
             <End Role="resume_tab" EntitySet="resume_tab" />
           </AssociationSet>
           <AssociationSet Name="fk_inv_ID_compVac" Association="Self.fk_inv_ID_compVac">
@@ -255,7 +390,60 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RecruitmentAgencyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="applicant">
+        <ComplexType Name="procStr_Result">
+          <Property Name="stroka" Type="String" MaxLength="55" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <ComplexType Name="selectCompany_Result">
+          <Property Name="company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address_company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone_company" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="name_competencies" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name_employee" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="post" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="phone_emp" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="selectProfile_Result">
+          <Property Name="lastname_applicant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_applicant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middlename_applicant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="number_phone_app" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email_app" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="birthday_app" Type="DateTime" Nullable="false" />
+          <Property Name="address_app" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_user" Type="Int64" Nullable="false" />
+          <Property Name="imageData" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </ComplexType>
+        <ComplexType Name="selectResume_Result">
+          <Property Name="resumeID" Type="Int64" Nullable="false" />
+          <Property Name="appID" Type="Int64" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middlename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="summary" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="reqSalary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="reqPost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="skill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="education" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="specialEducation" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="yearEndEducation" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="postWorkEx" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="working" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="yearStartWork" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="yearEndWork" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <ComplexType Name="selectVacancy_Result">
+          <Property Name="name_company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="post" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="applicants">
           <Key>
             <PropertyRef Name="ID_applicant" />
           </Key>
@@ -268,34 +456,46 @@
           <Property Name="birthday_app" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="gender_app" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="address_app" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ID_resume" Type="Int64" Nullable="false" />
+          <Property Name="ID_resume" Type="Int64" />
           <Property Name="ID_user" Type="Int64" Nullable="false" />
+          <Property Name="imageData" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="resume_tab" Relationship="Self.fk_inv_ID_app" FromRole="applicants" ToRole="resume_tab" />
-          <NavigationProperty Name="user" Relationship="Self.fk_inv_ID_usTwo" FromRole="applicants" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.fk_inv_ID_usTwo" FromRole="applicants" ToRole="users" />
         </EntityType>
-        <EntityType Name="competency">
+        <EntityType Name="companyMany">
+          <Key>
+            <PropertyRef Name="ID_company" />
+          </Key>
+          <Property Name="ID_company" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address_company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone_company" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title_company" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employers" Relationship="Self.fk_inv_company" FromRole="companyMany" ToRole="employers" />
+        </EntityType>
+        <EntityType Name="competencies">
           <Key>
             <PropertyRef Name="ID_competencies" />
           </Key>
           <Property Name="ID_competencies" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name_comp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="resume_tab" Relationship="Self.fk_inv_ID_comp" FromRole="competencies" ToRole="resume_tab" />
-          <NavigationProperty Name="vacancies" Relationship="Self.fk_inv_ID_compVac" FromRole="competencies" ToRole="vacancy" />
+          <Property Name="Name_comp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="vacancy" Relationship="Self.fk_inv_ID_compVac" FromRole="competencies" ToRole="vacancy" />
         </EntityType>
-        <EntityType Name="employer">
+        <EntityType Name="employers">
           <Key>
             <PropertyRef Name="ID_employee" />
           </Key>
           <Property Name="ID_employee" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name_employee" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="number_phone_emp" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_company" Type="Int32" />
           <Property Name="address_employee" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ID_user" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="vacancies" Relationship="Self.fk_inv_ID_employee" FromRole="employers" ToRole="vacancy" />
-          <NavigationProperty Name="user" Relationship="Self.fk_inv_ID_usOne" FromRole="employers" ToRole="users" />
+          <NavigationProperty Name="companyMany" Relationship="Self.fk_inv_company" FromRole="employers" ToRole="companyMany" />
+          <NavigationProperty Name="vacancy" Relationship="Self.fk_inv_ID_employee" FromRole="employers" ToRole="vacancy" />
+          <NavigationProperty Name="users" Relationship="Self.fk_inv_ID_usOne" FromRole="employers" ToRole="users" />
         </EntityType>
-        <EntityType Name="respons">
+        <EntityType Name="responses">
           <Key>
             <PropertyRef Name="ID_respone" />
           </Key>
@@ -311,15 +511,16 @@
           </Key>
           <Property Name="ID_resume" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_applicant" Type="Int64" Nullable="false" />
-          <Property Name="skills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="req_position" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ID_comp" Type="Int64" Nullable="false" />
           <Property Name="req_salary" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="applicant" Relationship="Self.fk_inv_ID_app" FromRole="resume_tab" ToRole="applicants" />
-          <NavigationProperty Name="competency" Relationship="Self.fk_inv_ID_comp" FromRole="resume_tab" ToRole="competencies" />
+          <Property Name="summary" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="workExperience" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="education" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="skills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="applicants" Relationship="Self.fk_inv_ID_app" FromRole="resume_tab" ToRole="applicants" />
           <NavigationProperty Name="responses" Relationship="Self.fk_inv_ID_res" FromRole="resume_tab" ToRole="responses" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -337,7 +538,7 @@
           <Property Name="name_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="users" Relationship="Self.fk_inv_ID_type" FromRole="types_users" ToRole="users" />
         </EntityType>
-        <EntityType Name="user">
+        <EntityType Name="users">
           <Key>
             <PropertyRef Name="ID_user" />
           </Key>
@@ -359,12 +560,12 @@
           <Property Name="ID_employee" Type="Int64" Nullable="false" />
           <Property Name="post" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="competency" Relationship="Self.fk_inv_ID_compVac" FromRole="vacancy" ToRole="competencies" />
-          <NavigationProperty Name="employer" Relationship="Self.fk_inv_ID_employee" FromRole="vacancy" ToRole="employers" />
+          <NavigationProperty Name="competencies" Relationship="Self.fk_inv_ID_compVac" FromRole="vacancy" ToRole="competencies" />
+          <NavigationProperty Name="employers" Relationship="Self.fk_inv_ID_employee" FromRole="vacancy" ToRole="employers" />
           <NavigationProperty Name="responses" Relationship="Self.fk_inv_ID_vac" FromRole="vacancy" ToRole="responses" />
         </EntityType>
         <Association Name="fk_inv_ID_app">
-          <End Role="applicants" Type="Self.applicant" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="1" />
           <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="applicants">
@@ -376,8 +577,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_inv_ID_usTwo">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="applicants" Type="Self.applicant" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="ID_user" />
@@ -387,20 +588,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_inv_ID_comp">
-          <End Role="competencies" Type="Self.competency" Multiplicity="1" />
-          <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="*" />
+        <Association Name="fk_inv_company">
+          <End Role="companyMany" Type="Self.companyMany" Multiplicity="0..1" />
+          <End Role="employers" Type="Self.employers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="competencies">
-              <PropertyRef Name="ID_competencies" />
+            <Principal Role="companyMany">
+              <PropertyRef Name="ID_company" />
             </Principal>
-            <Dependent Role="resume_tab">
-              <PropertyRef Name="ID_comp" />
+            <Dependent Role="employers">
+              <PropertyRef Name="ID_company" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_inv_ID_compVac">
-          <End Role="competencies" Type="Self.competency" Multiplicity="1" />
+          <End Role="competencies" Type="Self.competencies" Multiplicity="1" />
           <End Role="vacancy" Type="Self.vacancy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="competencies">
@@ -412,7 +613,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_inv_ID_employee">
-          <End Role="employers" Type="Self.employer" Multiplicity="1" />
+          <End Role="employers" Type="Self.employers" Multiplicity="1" />
           <End Role="vacancy" Type="Self.vacancy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="employers">
@@ -424,8 +625,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_inv_ID_usOne">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="employers" Type="Self.employer" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="employers" Type="Self.employers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="ID_user" />
@@ -437,7 +638,7 @@
         </Association>
         <Association Name="fk_inv_ID_res">
           <End Role="resume_tab" Type="Self.resume_tab" Multiplicity="1" />
-          <End Role="responses" Type="Self.respons" Multiplicity="*" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="resume_tab">
               <PropertyRef Name="ID_resume" />
@@ -449,7 +650,7 @@
         </Association>
         <Association Name="fk_inv_ID_vac">
           <End Role="vacancy" Type="Self.vacancy" Multiplicity="1" />
-          <End Role="responses" Type="Self.respons" Multiplicity="*" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="vacancy">
               <PropertyRef Name="ID_vac" />
@@ -461,7 +662,7 @@
         </Association>
         <Association Name="fk_inv_ID_type">
           <End Role="types_users" Type="Self.types_users" Multiplicity="1" />
-          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="types_users">
               <PropertyRef Name="ID_type_user" />
@@ -472,15 +673,16 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RecruitmentAgencyEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="applicants" EntityType="Self.applicant" />
-          <EntitySet Name="competencies" EntityType="Self.competency" />
-          <EntitySet Name="employers" EntityType="Self.employer" />
-          <EntitySet Name="responses" EntityType="Self.respons" />
+          <EntitySet Name="applicants" EntityType="Self.applicants" />
+          <EntitySet Name="companyMany" EntityType="Self.companyMany" />
+          <EntitySet Name="competencies" EntityType="Self.competencies" />
+          <EntitySet Name="employers" EntityType="Self.employers" />
+          <EntitySet Name="responses" EntityType="Self.responses" />
           <EntitySet Name="resume_tab" EntityType="Self.resume_tab" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="types_users" EntityType="Self.types_users" />
-          <EntitySet Name="users" EntityType="Self.user" />
-          <EntitySet Name="vacancies" EntityType="Self.vacancy" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="vacancy" EntityType="Self.vacancy" />
           <AssociationSet Name="fk_inv_ID_app" Association="Self.fk_inv_ID_app">
             <End Role="applicants" EntitySet="applicants" />
             <End Role="resume_tab" EntitySet="resume_tab" />
@@ -489,17 +691,17 @@
             <End Role="users" EntitySet="users" />
             <End Role="applicants" EntitySet="applicants" />
           </AssociationSet>
-          <AssociationSet Name="fk_inv_ID_comp" Association="Self.fk_inv_ID_comp">
-            <End Role="competencies" EntitySet="competencies" />
-            <End Role="resume_tab" EntitySet="resume_tab" />
+          <AssociationSet Name="fk_inv_company" Association="Self.fk_inv_company">
+            <End Role="companyMany" EntitySet="companyMany" />
+            <End Role="employers" EntitySet="employers" />
           </AssociationSet>
           <AssociationSet Name="fk_inv_ID_compVac" Association="Self.fk_inv_ID_compVac">
             <End Role="competencies" EntitySet="competencies" />
-            <End Role="vacancy" EntitySet="vacancies" />
+            <End Role="vacancy" EntitySet="vacancy" />
           </AssociationSet>
           <AssociationSet Name="fk_inv_ID_employee" Association="Self.fk_inv_ID_employee">
             <End Role="employers" EntitySet="employers" />
-            <End Role="vacancy" EntitySet="vacancies" />
+            <End Role="vacancy" EntitySet="vacancy" />
           </AssociationSet>
           <AssociationSet Name="fk_inv_ID_usOne" Association="Self.fk_inv_ID_usOne">
             <End Role="users" EntitySet="users" />
@@ -510,14 +712,71 @@
             <End Role="responses" EntitySet="responses" />
           </AssociationSet>
           <AssociationSet Name="fk_inv_ID_vac" Association="Self.fk_inv_ID_vac">
-            <End Role="vacancy" EntitySet="vacancies" />
+            <End Role="vacancy" EntitySet="vacancy" />
             <End Role="responses" EntitySet="responses" />
           </AssociationSet>
           <AssociationSet Name="fk_inv_ID_type" Association="Self.fk_inv_ID_type">
             <End Role="types_users" EntitySet="types_users" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
+          <FunctionImport Name="procStr" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.procStr_Result)">
+            <Parameter Name="s" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="selectCompany" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectCompany_Result)">
+            <Parameter Name="idEmp" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="selectProfile" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectProfile_Result)">
+            <Parameter Name="p_idUser" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="selectResume" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectResume_Result)">
+            <Parameter Name="idRes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="selectVacancy" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectVacancy_Result)" />
+          <FunctionImport Name="dropResume">
+            <Parameter Name="idRes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(RecruitmentAgencyModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(RecruitmentAgencyModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -525,7 +784,7 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище RecruitmentAgencyModelContainer" CdmEntityContainer="RecruitmentAgencyEntities">
           <EntitySetMapping Name="applicants">
-            <EntityTypeMapping TypeName="RecruitmentAgencyModel.applicant">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.applicants">
               <MappingFragment StoreEntitySet="applicants">
                 <ScalarProperty Name="ID_applicant" ColumnName="ID_applicant" />
                 <ScalarProperty Name="lastname_applicant" ColumnName="lastname_applicant" />
@@ -538,11 +797,23 @@
                 <ScalarProperty Name="address_app" ColumnName="address_app" />
                 <ScalarProperty Name="ID_resume" ColumnName="ID_resume" />
                 <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="imageData" ColumnName="imageData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="companyMany">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.companyMany">
+              <MappingFragment StoreEntitySet="companyMany">
+                <ScalarProperty Name="ID_company" ColumnName="ID_company" />
+                <ScalarProperty Name="name_company" ColumnName="name_company" />
+                <ScalarProperty Name="address_company" ColumnName="address_company" />
+                <ScalarProperty Name="phone_company" ColumnName="phone_company" />
+                <ScalarProperty Name="title_company" ColumnName="title_company" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="competencies">
-            <EntityTypeMapping TypeName="RecruitmentAgencyModel.competency">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.competencies">
               <MappingFragment StoreEntitySet="competencies">
                 <ScalarProperty Name="ID_competencies" ColumnName="ID_competencies" />
                 <ScalarProperty Name="Name_comp" ColumnName="Name_comp" />
@@ -550,19 +821,19 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="employers">
-            <EntityTypeMapping TypeName="RecruitmentAgencyModel.employer">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.employers">
               <MappingFragment StoreEntitySet="employers">
                 <ScalarProperty Name="ID_employee" ColumnName="ID_employee" />
                 <ScalarProperty Name="name_employee" ColumnName="name_employee" />
                 <ScalarProperty Name="number_phone_emp" ColumnName="number_phone_emp" />
-                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="ID_company" ColumnName="ID_company" />
                 <ScalarProperty Name="address_employee" ColumnName="address_employee" />
                 <ScalarProperty Name="ID_user" ColumnName="ID_user" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="responses">
-            <EntityTypeMapping TypeName="RecruitmentAgencyModel.respons">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.responses">
               <MappingFragment StoreEntitySet="responses">
                 <ScalarProperty Name="ID_respone" ColumnName="ID_respone" />
                 <ScalarProperty Name="ID_vacancy" ColumnName="ID_vacancy" />
@@ -575,15 +846,17 @@
               <MappingFragment StoreEntitySet="resume_tab">
                 <ScalarProperty Name="ID_resume" ColumnName="ID_resume" />
                 <ScalarProperty Name="ID_applicant" ColumnName="ID_applicant" />
-                <ScalarProperty Name="skills" ColumnName="skills" />
                 <ScalarProperty Name="req_position" ColumnName="req_position" />
-                <ScalarProperty Name="ID_comp" ColumnName="ID_comp" />
                 <ScalarProperty Name="req_salary" ColumnName="req_salary" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="workExperience" ColumnName="workExperience" />
+                <ScalarProperty Name="education" ColumnName="education" />
+                <ScalarProperty Name="skills" ColumnName="skills" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="RecruitmentAgencyModel.sysdiagram">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -602,7 +875,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="RecruitmentAgencyModel.user">
+            <EntityTypeMapping TypeName="RecruitmentAgencyModel.users">
               <MappingFragment StoreEntitySet="users">
                 <ScalarProperty Name="ID_user" ColumnName="ID_user" />
                 <ScalarProperty Name="login_user" ColumnName="login_user" />
@@ -611,7 +884,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vacancies">
+          <EntitySetMapping Name="vacancy">
             <EntityTypeMapping TypeName="RecruitmentAgencyModel.vacancy">
               <MappingFragment StoreEntitySet="vacancy">
                 <ScalarProperty Name="ID_vac" ColumnName="ID_vac" />
@@ -623,6 +896,104 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.procStr" FunctionImportName="procStr">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.procStr_Result">
+                <ScalarProperty Name="stroka" ColumnName="stroka" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectCompany" FunctionImportName="selectCompany">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectCompany_Result">
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="address_company" ColumnName="address_company" />
+                <ScalarProperty Name="phone_company" ColumnName="phone_company" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="name_competencies" ColumnName="name_competencies" />
+                <ScalarProperty Name="name_employee" ColumnName="name_employee" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="phone_emp" ColumnName="phone_emp" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectProfile" FunctionImportName="selectProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectProfile_Result">
+                <ScalarProperty Name="lastname_applicant" ColumnName="lastname_applicant" />
+                <ScalarProperty Name="name_applicant" ColumnName="name_applicant" />
+                <ScalarProperty Name="middlename_applicant" ColumnName="middlename_applicant" />
+                <ScalarProperty Name="number_phone_app" ColumnName="number_phone_app" />
+                <ScalarProperty Name="email_app" ColumnName="email_app" />
+                <ScalarProperty Name="birthday_app" ColumnName="birthday_app" />
+                <ScalarProperty Name="address_app" ColumnName="address_app" />
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="imageData" ColumnName="imageData" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectResume" FunctionImportName="selectResume">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectResume_Result">
+                <ScalarProperty Name="resumeID" ColumnName="resumeID" />
+                <ScalarProperty Name="appID" ColumnName="appID" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="middlename" ColumnName="middlename" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="reqSalary" ColumnName="reqSalary" />
+                <ScalarProperty Name="reqPost" ColumnName="reqPost" />
+                <ScalarProperty Name="skill" ColumnName="skill" />
+                <ScalarProperty Name="lang" ColumnName="lang" />
+                <ScalarProperty Name="education" ColumnName="education" />
+                <ScalarProperty Name="specialEducation" ColumnName="specialEducation" />
+                <ScalarProperty Name="yearEndEducation" ColumnName="yearEndEducation" />
+                <ScalarProperty Name="postWorkEx" ColumnName="postWorkEx" />
+                <ScalarProperty Name="working" ColumnName="working" />
+                <ScalarProperty Name="yearStartWork" ColumnName="yearStartWork" />
+                <ScalarProperty Name="yearEndWork" ColumnName="yearEndWork" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectVacancy" FunctionImportName="selectVacancy">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectVacancy_Result">
+                <ScalarProperty Name="name_company" ColumnName="name_company" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dropResume" FunctionName="Хранилище RecruitmentAgencyModel.dropResume" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище RecruitmentAgencyModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище RecruitmentAgencyModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище RecruitmentAgencyModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище RecruitmentAgencyModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище RecruitmentAgencyModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище RecruitmentAgencyModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище RecruitmentAgencyModel.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -637,7 +1008,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />

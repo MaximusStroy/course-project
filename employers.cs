@@ -12,21 +12,24 @@ namespace Vacancy
     using System;
     using System.Collections.Generic;
     
-    public partial class competency
+    public partial class employers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public competency()
+        public employers()
         {
-            this.resume_tab = new HashSet<resume_tab>();
-            this.vacancies = new HashSet<vacancy>();
+            this.vacancy = new HashSet<vacancy>();
         }
     
-        public long ID_competencies { get; set; }
-        public string Name_comp { get; set; }
+        public long ID_employee { get; set; }
+        public string name_employee { get; set; }
+        public string number_phone_emp { get; set; }
+        public Nullable<int> ID_company { get; set; }
+        public string address_employee { get; set; }
+        public long ID_user { get; set; }
     
+        public virtual companyMany companyMany { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<resume_tab> resume_tab { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<vacancy> vacancies { get; set; }
+        public virtual ICollection<vacancy> vacancy { get; set; }
+        public virtual users users { get; set; }
     }
 }

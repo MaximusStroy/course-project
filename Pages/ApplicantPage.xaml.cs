@@ -20,10 +20,13 @@ namespace Vacancy.Pages
     /// </summary>
     public partial class ApplicantPage : Page
     {
+        private bool _profile = true;
+        private bool _vacancy = false;
+        private bool _resume = false;
         public ApplicantPage()
         {
             InitializeComponent();
-            frameApp.Navigate(new VacanciesPage());
+            loadPage();
         }
 
 
@@ -34,12 +37,59 @@ namespace Vacancy.Pages
 
         private void btn_myProfile_Click(object sender, RoutedEventArgs e)
         {
-            frameApp.Navigate(new ProfilePage());
+            loadPage();   
         }
 
         private void btn_vacancy_Click(object sender, RoutedEventArgs e)
         {
-            frameApp.Navigate(new VacanciesPage());
+            if (_vacancy == true)
+            {
+                frameApp.Navigate(new VacanciesPage());
+                _profile = true;
+                _resume = true;
+                _vacancy = false;
+                btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
+                btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
+
+            }
+        }
+
+        private void btn_myResume_Click(object sender, RoutedEventArgs e)
+        {
+            if (_resume == true)
+            {
+                frameApp.Navigate(new ResumeAppPage());
+                _profile = true;
+                _resume = false;
+                _vacancy = true;
+                btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest"); 
+                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
+                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
+                btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+            }
+        }
+
+        private void loadPage()
+        {
+            if (_profile == true)
+            {
+                frameApp.Navigate(new ProfilePage());
+                _profile = false;
+                btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
+                btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
+                _resume = true;
+                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                _vacancy = true;
+                btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+            }
         }
     }
 }

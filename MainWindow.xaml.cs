@@ -20,11 +20,20 @@ namespace Vacancy
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int status = 0;
         public MainWindow()
         {
             InitializeComponent();
 
             frame.Navigate(new Pages.SignUpAndLogInPage());
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            foreach (Window item in App.Current.Windows)
+            {
+                item.Close();
+            }
         }
     }
 }

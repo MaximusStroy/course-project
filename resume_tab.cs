@@ -17,19 +17,20 @@ namespace Vacancy
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public resume_tab()
         {
-            this.responses = new HashSet<respons>();
+            this.responses = new HashSet<responses>();
         }
     
         public long ID_resume { get; set; }
         public long ID_applicant { get; set; }
-        public string skills { get; set; }
         public string req_position { get; set; }
-        public long ID_comp { get; set; }
         public Nullable<decimal> req_salary { get; set; }
+        public string summary { get; set; }
+        public string workExperience { get; set; }
+        public string education { get; set; }
+        public string skills { get; set; }
     
-        public virtual applicant applicant { get; set; }
-        public virtual competency competency { get; set; }
+        public virtual applicants applicants { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<respons> responses { get; set; }
+        public virtual ICollection<responses> responses { get; set; }
     }
 }
