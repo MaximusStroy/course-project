@@ -68,6 +68,16 @@ namespace Vacancy
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<selectProfile_Result>("[RecruitmentAgencyEntities].[selectProfile](@p_idUser)", p_idUserParameter);
         }
     
+        [DbFunction("RecruitmentAgencyEntities", "selectResponsesApp")]
+        public virtual IQueryable<selectResponsesApp_Result> selectResponsesApp(Nullable<int> idApp)
+        {
+            var idAppParameter = idApp.HasValue ?
+                new ObjectParameter("idApp", idApp) :
+                new ObjectParameter("idApp", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<selectResponsesApp_Result>("[RecruitmentAgencyEntities].[selectResponsesApp](@idApp)", idAppParameter);
+        }
+    
         [DbFunction("RecruitmentAgencyEntities", "selectResume")]
         public virtual IQueryable<selectResume_Result> selectResume(Nullable<int> idRes)
         {
@@ -76,6 +86,16 @@ namespace Vacancy
                 new ObjectParameter("idRes", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<selectResume_Result>("[RecruitmentAgencyEntities].[selectResume](@idRes)", idResParameter);
+        }
+    
+        [DbFunction("RecruitmentAgencyEntities", "selectResumeComboBox")]
+        public virtual IQueryable<selectResumeComboBox_Result> selectResumeComboBox(Nullable<int> idRes)
+        {
+            var idResParameter = idRes.HasValue ?
+                new ObjectParameter("idRes", idRes) :
+                new ObjectParameter("idRes", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<selectResumeComboBox_Result>("[RecruitmentAgencyEntities].[selectResumeComboBox](@idRes)", idResParameter);
         }
     
         [DbFunction("RecruitmentAgencyEntities", "selectVacancy")]

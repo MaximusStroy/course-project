@@ -24,9 +24,6 @@ namespace Vacancy.Pages
 
     public partial class LogInPage : Page
     {
-        bool isLogin = false;
-        bool isPass = false;
-
         public LogInPage()
         {
             InitializeComponent();
@@ -35,16 +32,51 @@ namespace Vacancy.Pages
         {
             using(RecruitmentAgencyEntities bd = new RecruitmentAgencyEntities())
             {
-                var findingUser = bd.users 
-                                   .Where (u => u.login_user == txt_logIn.Text && u.password_user == txt_pass.Password )
-                                   .Select (u => new { u.login_user, u.password_user, u.types_users, u.ID_user}).ToList();
-                if (findingUser.Count > 0 && findingUser.First().types_users.ID_type_user == 3)
+
+                switch (Models.CInfo.status)
                 {
-                    NavigationService.Navigate(new Uri("Pages/ApplicantPage.xaml", UriKind.Relative));
-                    Models.CInfo.status = (int)findingUser.First().ID_user;
-                } else
-                {
-                    MessageBox.Show("Вы ввели неправильный пароль или логин");
+                    case 2:
+                        var findingUser = (from us in bd.users
+                                           from e in bd.employers
+                                           where us.ID_user == e.ID_user
+                                           where us.login_user == txt_logIn.Text
+                                           where us.password_user == txt_pass.Password
+                                           select new
+                                           {
+                                               idUser = us.ID_user,
+                                               type = us.ID_type_user,
+                                               login = us.login_user,
+                                               pass = us.password_user,
+                                               idApp = e.ID_employee
+                                           }).ToList();
+                        if (findingUser.Count > 0)
+                        {
+                            NavigationService.Navigate(new Uri("Pages/EmployerPage.xaml", UriKind.Relative));
+                            Models.CInfo.id_app = (int)findingUser.First().idApp;
+                        }
+                        else MessageBox.Show("Пользователь не найден");
+                        break;
+
+                    case 3:
+                        findingUser = (from us in bd.users
+                                           from app in bd.applicants
+                                           where us.ID_user == app.ID_user
+                                           where us.login_user == txt_logIn.Text
+                                           where us.password_user == txt_pass.Password
+                                           select new
+                                           {
+                                               idUser = us.ID_user,
+                                               type = us.ID_type_user,
+                                               login = us.login_user,
+                                               pass = us.password_user,
+                                               idApp = app.ID_applicant
+                                           }).ToList();
+                        if (findingUser.Count > 0)
+                        {
+                            NavigationService.Navigate(new Uri("Pages/ApplicantPage.xaml", UriKind.Relative));
+                            Models.CInfo.id_app = (int)findingUser.First().idApp;
+                        }
+                        break;
                 }
             }
         }

@@ -1,0 +1,121 @@
+﻿<Page x:Class="Vacancy.Pages.ResponsesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Vacancy.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ResponsesPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView 
+            Style="{DynamicResource listStyle}"
+            Name="listResp"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            HorizontalContentAlignment="Center"
+            Grid.Row="1">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                        
+                    </WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Style="{DynamicResource borderStyle}"
+                        HorizontalAlignment="Stretch" 
+                        Width="auto">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image
+                            Width="30"
+                            Height="30"
+                            Margin="5"
+                            Stretch="UniformToFill"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                                
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="/Images/arrows.png"/>
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding flag}" Value="true">
+                                                <Setter Property="Source" Value="/Images/CheckE.png"/>
+                                            </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding flag}" Value="false">
+                                                <Setter Property="Source" Value="/Images/x.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="5"
+                            FontSize="8"
+                            Text="Работодатель"
+                            Style="{DynamicResource textblockStyle}"/>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Margin="5"
+                            FontSize="8"
+                            Text="Соискатель(Я)"
+                            Style="{DynamicResource textblockStyle}"/>
+                        <TextBlock
+                            Text="{Binding post}"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="5"
+                            FontSize="16"
+                            Style="{DynamicResource textblockStyle}"/>
+                        <TextBlock
+                            Text="{Binding salary}"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Margin="5"
+                            FontSize="16"
+                            Style="{DynamicResource textblockStyle}"/>
+                        <TextBlock
+                            Text="{Binding req_position}"
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Margin="5"
+                            FontSize="16"
+                            Style="{DynamicResource textblockStyle}"/>
+                        <TextBlock
+                            Text="{Binding req_salary}"
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Margin="5"
+                            FontSize="16"
+                            Style="{DynamicResource textblockStyle}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+    </Grid>
+</Page>

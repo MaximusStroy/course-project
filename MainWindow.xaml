@@ -21,6 +21,26 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            FontSize="20">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Text" Value=""/>
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Models.CInfo.status}" Value="2">
+                            <Setter Property="Text" Value="РАБОТОДАТЕЛЬ"/>
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Models.CInfo.status}" Value="3">
+                            <Setter Property="Text" Value="СОИСКАТЕЛЬ"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <Frame
             Background="#C4DFE6"
             Name="frame"

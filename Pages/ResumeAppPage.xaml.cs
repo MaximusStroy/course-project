@@ -60,15 +60,17 @@ namespace Vacancy.Pages
                            select x).ToList() ;
             }
             listRes.ItemsSource = resumes;
-            Models.CInfo.id_app = (int)resumes.First().ID_applicant;
+            listRes.SelectedIndex = 0;
         }
         private void listRes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Models.CInfo cInfo = new Models.CInfo();
             using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
             {
                 var res = (resume_tab)listRes.SelectedItem;
                 try
                 {
+                    clearScroll();
                     if (res != null)
                     {
                         var infoRes = db.selectResume((int)res.ID_resume);
@@ -114,10 +116,10 @@ namespace Vacancy.Pages
                             txtYearEndEducation.Text = infoRes.First().yearEndEducation.ToString();
 
                         if (null != infoRes.First().lang)
-                            txtLanguages.Text = convertJsonToString(System.Web.Helpers.Json.Decode(infoRes.First().lang));
+                            txtLanguages.Text = infoRes.First().lang.ToString();
 
                         if (null != infoRes.First().skill)
-                            txtSkills.Text = convertJsonToString(System.Web.Helpers.Json.Decode(infoRes.First().skill));
+                            txtSkills.Text = infoRes.First().skill.ToString();
 
                         if (null != infoRes.First().resumeID)
                             txt_numResume.Text = infoRes.First().resumeID.ToString();
@@ -130,17 +132,7 @@ namespace Vacancy.Pages
             
             }
         }
-        private string convertJsonToString(dynamic _dynamic)
-        {
-            string result = "";
-            for (int i = 0; i < _dynamic.Length; i++)
-            {
-                result += _dynamic[i];
-                if (i != _dynamic.Length - 1)
-                    result += ", ";
-            }
-            return result;
-        }
+        
 
         private void btnDeleteResume_Click(object sender, RoutedEventArgs e)
         {
@@ -153,9 +145,8 @@ namespace Vacancy.Pages
 
                     db.dropResume((int)resDel.ID_resume);
 
-                    openList();
-
                     clearScroll();
+                    openList();
                 }
             }
         }
@@ -231,6 +222,7 @@ namespace Vacancy.Pages
 
         private void btnChangeSave_Click(object sender, RoutedEventArgs e)
         {
+            Models.CInfo cInfo = new Models.CInfo();
             try
             {
                 if (MessageBox.Show("Сохранить изменения?", "Сохранение изменений", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -278,8 +270,8 @@ namespace Vacancy.Pages
                         */
                         var jsonSkills = new
                         {
-                            skill = txtLanguages.Text.Trim().ToString(),
-                            language = txtSkills.Text.Trim().ToString()
+                            language = txtLanguages.Text.Trim().ToString(),
+                            skill = txtSkills.Text.Trim().ToString()
                         };
                         app.skills = System.Web.Helpers.Json.Encode(jsonSkills);
                     }

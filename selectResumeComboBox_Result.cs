@@ -10,16 +10,12 @@
 namespace Vacancy
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class responses
+    public partial class selectResumeComboBox_Result
     {
-        public long ID_respone { get; set; }
-        public long ID_vacancy { get; set; }
-        public long ID_resume { get; set; }
-        public Nullable<bool> flag { get; set; }
-    
-        public virtual resume_tab resume_tab { get; set; }
-        public virtual vacancy vacancy { get; set; }
+        public long resumeID { get; set; }
+        public long appID { get; set; }
+        public Nullable<decimal> reqSalary { get; set; }
+        public string reqPost { get; set; }
     }
 }

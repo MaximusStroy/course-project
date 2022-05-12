@@ -1,75 +1,25 @@
-﻿<Page x:Class="Vacancy.Pages.VacanciesPage"
-	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	  xmlns:local="clr-namespace:Vacancy.Pages"
-	  mc:Ignorable="d" 
-	  xml:lang="ru"
-	  d:DesignHeight="450" d:DesignWidth="800"
-	  Title="VacanciesPage">
-
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:Vacancy.Pages" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="Vacancy.Pages.VacanciesPage" mc:Ignorable="d" xml:lang="ru" d:DesignHeight="450" d:DesignWidth="800" Title="VacanciesPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel
-            Grid.ColumnSpan="2"
-            Grid.Column="0"
-			Height="40"
-			Grid.Row="0"
-			Orientation="Horizontal">
-            <TextBlock
-                Style="{DynamicResource textblockStyle}"
-                x:Name="btn_find"
-				Margin="5"
-                FontSize="16"
-				Width="70"
-                Height="30"
-				VerticalAlignment="Center"
-				HorizontalAlignment="Right"
-				Text="Поиск"/>
-            <TextBox 
-                Style="{DynamicResource boxStyle}"
-                Height="30"
-                MaxLength="55"
-                x:Name="txt_find"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"
-				Width="300"
-				Margin="5" TextChanged="txt_find_TextChanged"/>
-            <ComboBox
-                Style="{DynamicResource comboboxStyle}"
-                Height="30"
-                x:Name="ComboType"
-				Width="230"
-				VerticalAlignment="Center"
-				HorizontalAlignment="Center"
-				Margin="5" 
-                SelectionChanged="ComboType_SelectionChanged">
+        <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Height="40" Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Style="{DynamicResource textblockStyle}" x:Name="btn_find" Margin="5" FontSize="16" Width="70" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Поиск" />
+            <TextBox Style="{DynamicResource boxStyle}" Height="30" MaxLength="55" x:Name="txt_find" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="5" TextChanged="txt_find_TextChanged" />
+            <ComboBox Style="{DynamicResource comboboxStyle}" Height="30" x:Name="ComboType" Width="230" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" SelectionChanged="ComboType_SelectionChanged">
                 <ComboBoxItem>Не сортировать</ComboBoxItem>
                 <ComboBoxItem>По специальностям</ComboBoxItem>
                 <ComboBoxItem>По зарплате</ComboBoxItem>
             </ComboBox>
         </StackPanel>
-        <Border
-            Style="{DynamicResource borderStyle}"
-            Grid.Row="1"
-            Grid.Column="0"
-            Width="auto">
-            <ListView
-                Style="{DynamicResource listStyle}"
-                ItemsSource="{Binding Items}"
-                Grid.Row="1"
-                Grid.Column="0"
-			    SelectionChanged="listVac_SelectionChanged"
-			    x:Name="listVac"
-                HorizontalAlignment="Center">
+        <Border Style="{DynamicResource borderStyle}" Grid.Row="1" Grid.Column="0" Width="auto">
+            <ListView Style="{DynamicResource listStyle}" ItemsSource="{Binding Items}" Grid.Row="1" Grid.Column="0" SelectionChanged="listVac_SelectionChanged" x:Name="listVac" HorizontalAlignment="Center">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{DynamicResource myHeaderStyle}">
                         <GridViewColumn>
@@ -77,14 +27,8 @@
                                 <DataTemplate>
                                     <Border Style="{DynamicResource borderStyle}">
                                         <StackPanel>
-                                            <TextBlock 
-                                        Style="{DynamicResource textblockStyle}" 
-                                        Text="{Binding post}"
-                                        Margin="5"/>
-                                            <TextBlock 
-                                        Margin="5"
-                                        Style="{DynamicResource textblockStyle}" 
-                                        Text="{Binding salary, StringFormat=\{0:C0\}}"/>
+                                            <TextBlock Style="{DynamicResource textblockStyle}" Text="{Binding post}" Margin="5" />
+                                            <TextBlock Margin="5" Style="{DynamicResource textblockStyle}" Text="{Binding salary, StringFormat=\{0:C0\}}" />
                                         </StackPanel>
                                     </Border>
                                 </DataTemplate>
@@ -94,58 +38,22 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <Border Style="{DynamicResource borderStyle}"
-                Grid.Column="1"
-                HorizontalAlignment="Stretch"
-                Grid.Row="1"
-                Width="auto">
-            <StackPanel
-            x:Name="stackWithSV">
-            <ScrollViewer
-                x:Name="scrollView"
-				HorizontalAlignment="Stretch" 
-				Width="auto" 
-                VerticalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <TextBlock
-                        Style="{DynamicResource textblockStyle}"
-						TextAlignment="Center"
-						FontSize="30"
-						HorizontalAlignment="Center"
-						Margin="10"
-						TextWrapping="Wrap"
-						x:Name="txt_nameVac"
-						Width="560"/>
-                    <TextBlock
-                        Style="{DynamicResource textblockStyle}"
-						Text="{Binding StringFormat=\{0\}}"
-						HorizontalAlignment="Center"
-						Margin="10"
-						Width="560"
-						x:Name="txt_salaryVac"
-						TextAlignment="Center"
-						FontSize="26"
-						TextWrapping="Wrap"/>
-                    <TextBlock
-                        Style="{DynamicResource textblockStyle}"
-						HorizontalAlignment="Center"
-						Margin="10"
-						Width="560"
-						x:Name="txt_companyVac"
-						TextAlignment="Center"
-						FontSize="26"/>
-                    <TextBlock
-                        Style="{DynamicResource textblockStyle}"
-						Margin="10"
-						TextWrapping="Wrap"
-						x:Name="txt_itemVac"
-						FontSize="18" 
-						HorizontalAlignment="Stretch" 
-						Width="540"/>
-                   </StackPanel>
-                
-            </ScrollViewer>
-        </StackPanel>
+        <Border Style="{DynamicResource borderStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" Width="auto">
+            <StackPanel x:Name="stackWithSV">
+                <ScrollViewer x:Name="scrollView" HorizontalAlignment="Stretch" Width="auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource textblockStyle}" TextAlignment="Center" FontSize="30" HorizontalAlignment="Center" Margin="10" TextWrapping="Wrap" x:Name="txt_nameVac" Width="560" />
+                        <TextBlock Style="{DynamicResource textblockStyle}" Text="{Binding StringFormat=\{0\}}" HorizontalAlignment="Center" Margin="10" Width="560" x:Name="txt_salaryVac" TextAlignment="Center" FontSize="26" TextWrapping="Wrap" />
+                        <TextBlock Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" Margin="10" Width="560" x:Name="txt_companyVac" TextAlignment="Center" FontSize="26" />
+                        <TextBlock Style="{DynamicResource textblockStyle}" Margin="10" TextWrapping="Wrap" x:Name="txt_itemVac" FontSize="18" HorizontalAlignment="Stretch" Width="540" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Button Style="{DynamicResource buttonStyle}" Margin="10" x:Name="btnRespons" FontSize="16" Content="Откликнуться" Width="150" Height="30" Click="btnRespons_Click" />
+                            <TextBlock Style="{DynamicResource textblockStyle}" Margin="20,5" Text="{Binding  ElementName=ComboResume, Path=SelectedValue}" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <ComboBox Style="{DynamicResource comboboxStyle}" ItemsSource="{Binding Path=item}" SelectedValue="{Binding Path=item}" SelectedValuePath="ID_resume" DisplayMemberPath="req_position"  Height="30" x:Name="ComboResume" Width="230" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
         </Border>
     </Grid>
 </Page>

@@ -120,11 +120,20 @@
     <Compile Include="Pages\ChangeStatusPage.xaml.cs">
       <DependentUpon>ChangeStatusPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EmployerPage.xaml.cs">
+      <DependentUpon>EmployerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LogInPage.xaml.cs">
       <DependentUpon>LogInPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ProfileEmployerPage.xaml.cs">
+      <DependentUpon>ProfileEmployerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ResponsesPage.xaml.cs">
+      <DependentUpon>ResponsesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ResumeAppPage.xaml.cs">
       <DependentUpon>ResumeAppPage.xaml</DependentUpon>
@@ -148,6 +157,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="selectProfile_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="selectResponsesApp_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="selectResumeComboBox_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="selectResume_Result.cs">
@@ -202,11 +217,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\EmployerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LogInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ProfileEmployerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ResponsesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,6 +298,11 @@
   <ItemGroup>
     <Resource Include="Images\job1.jpg" />
     <Resource Include="Images\pic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\x.png" />
+    <Resource Include="Images\CheckE.png" />
+    <Resource Include="Images\arrows.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model1.Context.tt">

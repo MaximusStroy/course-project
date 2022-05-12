@@ -13,6 +13,7 @@ namespace Vacancy
     
     public partial class selectCompany_Result
     {
+        public long vacID { get; set; }
         public string company { get; set; }
         public string address_company { get; set; }
         public string phone_company { get; set; }

@@ -24,11 +24,16 @@ namespace Vacancy.Pages
     {
         List<vacancy> vacancies = new List<vacancy>();
         List<vacancy> filteredList = new List<vacancy>();
+
+        public List<resume_tab> comboResumes { get; set; }
+        List<resume_tab> changeComboResume = new List<resume_tab>();
         public VacanciesPage()
         {
             InitializeComponent();
             ComboType.SelectedIndex = 0;
             Loaded += VacanciesPage_Loaded;
+            listVac.SelectedIndex = 0;
+            comboboxUpdate();
         }
 
         private void VacanciesPage_Loaded(object sender, RoutedEventArgs e)
@@ -43,12 +48,19 @@ namespace Vacancy.Pages
                 }
             }
             listVac.ItemsSource = vacancies.ToList();
+
         }
 
-        private void UpdateVacancy()
+        private void comboboxUpdate()
         {
-            
+            RecruitmentAgencyEntities db = new RecruitmentAgencyEntities();
+            var item = db.resume_tab.Where(x => x.ID_applicant == Models.CInfo.id_app).ToList();
+            comboResumes = item;
+            DataContext = comboResumes;
+            ComboResume.ItemsSource = comboResumes.ToList();
+            ComboResume.SelectedItem = 2;
         }
+
 
         private void listVac_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -110,6 +122,39 @@ namespace Vacancy.Pages
                 listVac.ItemsSource = filteredList.ToList();
             }
             else listVac.ItemsSource = vacancies.ToList();
+        }
+
+        private void btnRespons_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
+                {
+                    responses _responses = new responses();
+                    var vac = (listVac.SelectedItem as vacancy);
+                    var sItem = (long)ComboResume.SelectedValue;
+
+                    var companyInfo = db.selectCompany((int)vac.ID_vac);
+
+                    _responses.ID_vacancy = companyInfo.First().vacID;
+                    _responses.ID_resume = sItem;
+                    var respChecking = (from x in db.responses
+                                        where x.ID_resume == _responses.ID_resume && x.ID_vacancy == _responses.ID_vacancy
+                                        select x).ToList();
+                    if (respChecking.Count <= 0)
+                    {
+                        db.responses.Add(_responses);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Отлик на эту вакансию с этим резюме уже имеется. Чтобы откликнуться на эту вакансию можете выбрать другое резюме.");
+                    }
+                }
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

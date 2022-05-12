@@ -28,11 +28,13 @@ namespace Vacancy.Pages
         private void LogInApplicantBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Pages/LogInPage.xaml", UriKind.Relative));
+            Models.CInfo.status = 3;
         }
 
         private void LogInEmployerBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Pages/LogInPage.xaml", UriKind.Relative));
+            Models.CInfo.status = 2;
         }
     }
 }

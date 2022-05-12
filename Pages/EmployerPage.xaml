@@ -1,4 +1,4 @@
-﻿<Page x:Class="Vacancy.Pages.ApplicantPage"
+﻿<Page x:Class="Vacancy.Pages.EmployerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Vacancy.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ApplicantPage">
+      Title="EmployerPage">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,21 +31,21 @@
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="МОЙ ПРОФИЛЬ" Click="btn_myProfile_Click"/>
+                Content="МОЙ ПРОФИЛЬ"/>
             <Button x:Name="btn_myResume"
                 Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="МОИ РЕЗЮМЕ" Click="btn_myResume_Click"/>
+                Content="РЕЗЮМЕ"/>
             <Button x:Name="btn_vacancy"
                 Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="ВАКАНСИИ" Click="btn_vacancy_Click"/>
+                Content="МОИ ВАКАНСИИ"/>
             <Button
                 Style="{DynamicResource buttonStyle}"
                 Height="30"
@@ -53,7 +53,7 @@
                 Name="btn_responses"
                 Margin="5"
                 Width="auto"
-                Content="ОТКЛИКИ" Click="Button_Click"/>
+                Content="ОТКЛИКИ"/>
         </StackPanel>
         <Button x:Name="btn_Exit"
                 Style="{DynamicResource buttonStyle}"

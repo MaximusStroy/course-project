@@ -57,6 +57,7 @@
           <Property Name="ID_respone" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_vacancy" Type="bigint" Nullable="false" />
           <Property Name="ID_resume" Type="bigint" Nullable="false" />
+          <Property Name="flag" Type="bit" />
         </EntityType>
         <EntityType Name="resume_tab">
           <Key>
@@ -235,6 +236,7 @@
           <ReturnType>
             <CollectionType>
               <RowType>
+                <Property Name="vacID" Type="bigint" Nullable="false" />
                 <Property Name="company" Type="nvarchar" MaxLength="255" Nullable="false" />
                 <Property Name="address_company" Type="nvarchar" MaxLength="255" Nullable="false" />
                 <Property Name="phone_company" Type="nvarchar" MaxLength="15" Nullable="false" />
@@ -266,6 +268,21 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="selectResponsesApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idApp" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ID_respone" Type="bigint" Nullable="false" />
+                <Property Name="req_position" Type="nvarchar" MaxLength="20" />
+                <Property Name="req_salary" Type="money" />
+                <Property Name="post" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="salary" Type="money" Nullable="false" />
+                <Property Name="flag" Type="bit" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="selectResume" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idRes" Type="int" Mode="In" />
           <ReturnType>
@@ -283,8 +300,8 @@
                 <Property Name="summary" Type="nvarchar" MaxLength="255" />
                 <Property Name="reqSalary" Type="money" />
                 <Property Name="reqPost" Type="nvarchar" MaxLength="20" />
-                <Property Name="skill" Type="nvarchar(max)" />
-                <Property Name="lang" Type="nvarchar(max)" />
+                <Property Name="skill" Type="nvarchar" MaxLength="4000" />
+                <Property Name="lang" Type="nvarchar" MaxLength="4000" />
                 <Property Name="education" Type="nvarchar" MaxLength="4000" />
                 <Property Name="specialEducation" Type="nvarchar" MaxLength="4000" />
                 <Property Name="yearEndEducation" Type="nvarchar" MaxLength="4000" />
@@ -292,6 +309,19 @@
                 <Property Name="working" Type="nvarchar" MaxLength="4000" />
                 <Property Name="yearStartWork" Type="nvarchar" MaxLength="4000" />
                 <Property Name="yearEndWork" Type="nvarchar" MaxLength="4000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="selectResumeComboBox" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idRes" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="resumeID" Type="bigint" Nullable="false" />
+                <Property Name="appID" Type="bigint" Nullable="false" />
+                <Property Name="reqSalary" Type="money" />
+                <Property Name="reqPost" Type="nvarchar" MaxLength="20" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -394,6 +424,7 @@
           <Property Name="stroka" Type="String" MaxLength="55" FixedLength="false" Unicode="true" />
         </ComplexType>
         <ComplexType Name="selectCompany_Result">
+          <Property Name="vacID" Type="Int64" Nullable="false" />
           <Property Name="company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="address_company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phone_company" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
@@ -415,6 +446,14 @@
           <Property Name="ID_user" Type="Int64" Nullable="false" />
           <Property Name="imageData" Type="Binary" MaxLength="Max" FixedLength="false" />
         </ComplexType>
+        <ComplexType Name="selectResponsesApp_Result">
+          <Property Name="ID_respone" Type="Int64" Nullable="false" />
+          <Property Name="req_position" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="req_salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="post" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="flag" Type="Boolean" />
+        </ComplexType>
         <ComplexType Name="selectResume_Result">
           <Property Name="resumeID" Type="Int64" Nullable="false" />
           <Property Name="appID" Type="Int64" Nullable="false" />
@@ -428,8 +467,8 @@
           <Property Name="summary" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="reqSalary" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="reqPost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="skill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="lang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="skill" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lang" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="education" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="specialEducation" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="yearEndEducation" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
@@ -437,6 +476,12 @@
           <Property Name="working" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="yearStartWork" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="yearEndWork" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <ComplexType Name="selectResumeComboBox_Result">
+          <Property Name="resumeID" Type="Int64" Nullable="false" />
+          <Property Name="appID" Type="Int64" Nullable="false" />
+          <Property Name="reqSalary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="reqPost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </ComplexType>
         <ComplexType Name="selectVacancy_Result">
           <Property Name="name_company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
@@ -502,6 +547,7 @@
           <Property Name="ID_respone" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_vacancy" Type="Int64" Nullable="false" />
           <Property Name="ID_resume" Type="Int64" Nullable="false" />
+          <Property Name="flag" Type="Boolean" />
           <NavigationProperty Name="resume_tab" Relationship="Self.fk_inv_ID_res" FromRole="responses" ToRole="resume_tab" />
           <NavigationProperty Name="vacancy" Relationship="Self.fk_inv_ID_vac" FromRole="responses" ToRole="vacancy" />
         </EntityType>
@@ -728,7 +774,13 @@
           <FunctionImport Name="selectProfile" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectProfile_Result)">
             <Parameter Name="p_idUser" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="selectResponsesApp" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectResponsesApp_Result)">
+            <Parameter Name="idApp" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="selectResume" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectResume_Result)">
+            <Parameter Name="idRes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="selectResumeComboBox" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectResumeComboBox_Result)">
             <Parameter Name="idRes" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="selectVacancy" IsComposable="true" ReturnType="Collection(RecruitmentAgencyModel.selectVacancy_Result)" />
@@ -838,6 +890,7 @@
                 <ScalarProperty Name="ID_respone" ColumnName="ID_respone" />
                 <ScalarProperty Name="ID_vacancy" ColumnName="ID_vacancy" />
                 <ScalarProperty Name="ID_resume" ColumnName="ID_resume" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -906,6 +959,7 @@
           <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectCompany" FunctionImportName="selectCompany">
             <ResultMapping>
               <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectCompany_Result">
+                <ScalarProperty Name="vacID" ColumnName="vacID" />
                 <ScalarProperty Name="company" ColumnName="company" />
                 <ScalarProperty Name="address_company" ColumnName="address_company" />
                 <ScalarProperty Name="phone_company" ColumnName="phone_company" />
@@ -933,6 +987,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectResponsesApp" FunctionImportName="selectResponsesApp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectResponsesApp_Result">
+                <ScalarProperty Name="ID_respone" ColumnName="ID_respone" />
+                <ScalarProperty Name="req_position" ColumnName="req_position" />
+                <ScalarProperty Name="req_salary" ColumnName="req_salary" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectResume" FunctionImportName="selectResume">
             <ResultMapping>
               <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectResume_Result">
@@ -957,6 +1023,16 @@
                 <ScalarProperty Name="working" ColumnName="working" />
                 <ScalarProperty Name="yearStartWork" ColumnName="yearStartWork" />
                 <ScalarProperty Name="yearEndWork" ColumnName="yearEndWork" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="Хранилище RecruitmentAgencyModel.selectResumeComboBox" FunctionImportName="selectResumeComboBox">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentAgencyModel.selectResumeComboBox_Result">
+                <ScalarProperty Name="resumeID" ColumnName="resumeID" />
+                <ScalarProperty Name="appID" ColumnName="appID" />
+                <ScalarProperty Name="reqSalary" ColumnName="reqSalary" />
+                <ScalarProperty Name="reqPost" ColumnName="reqPost" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

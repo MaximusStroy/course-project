@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +19,19 @@ namespace Vacancy.SubWindows
     /// <summary>
     /// Логика взаимодействия для createResumeWindow.xaml
     /// </summary>
+    /// 
+
+    class CSkills
+    {
+        public string skill { get; }
+        public string language { get; }
+
+        public CSkills(string _skill, string _lang)
+        {
+            skill = _skill;
+            language = _lang;
+        }
+    }
     public partial class createResumeWindow : Window
     {
         public createResumeWindow()
@@ -82,6 +97,7 @@ namespace Vacancy.SubWindows
             txt_city_w.IsEnabled = _bool;
             txt_birth_w.IsEnabled = _bool;
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Сохранить изменения?", "Сохранение изменений", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -117,15 +133,15 @@ namespace Vacancy.SubWindows
                 };
                 if (txtLanguages_w.Text != "" && txtSkills_w.Text != "")
                 {
-                    dynamic langDyn = System.Web.Helpers.Json.Encode(txtLanguages_w.Text.Trim());
-                    dynamic skillDyn = System.Web.Helpers.Json.Encode(txtSkills_w.Text.Trim());
-
-                    var jsonSkills = new
+                    object oSkills = new
                     {
-                        skill = (String)skillDyn,
-                        language = (String)langDyn
+                        skill = txtSkills_w.Text.ToString(),
+                        language = txtLanguages_w.Text.ToString()
                     };
-                    app.skills = System.Web.Helpers.Json.Encode(jsonSkills);
+                    CSkills jsonSkill = new CSkills(txtSkills_w.Text.Trim().ToString(), txtLanguages_w.Text.Trim().ToString());
+                    
+                    app.skills = System.Web.Helpers.Json.Encode(oSkills);
+                     
                 }
                 app.ID_applicant = Models.CInfo.id_app;
                 if (txtSummaryPost.Text != "") {

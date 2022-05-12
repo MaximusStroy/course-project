@@ -16,21 +16,19 @@ using System.Windows.Shapes;
 namespace Vacancy.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для ApplicantPage.xaml
+    /// Логика взаимодействия для EmployerPage.xaml
     /// </summary>
-    public partial class ApplicantPage : Page
+    public partial class EmployerPage : Page
     {
-        private bool _profile = true;
-        private bool _vacancy = false;
-        private bool _resume = false;
-        private bool _response = false;
-        public ApplicantPage()
+        public EmployerPage()
         {
             InitializeComponent();
             loadPage();
         }
-
-
+        private bool _profile = true;
+        private bool _vacancy = false;
+        private bool _resume = false;
+        private bool _response = false;
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Pages/LogInPage.xaml", UriKind.Relative));
@@ -41,7 +39,7 @@ namespace Vacancy.Pages
             loadPage();
         }
 
-        private void btn_vacancy_Click(object sender, RoutedEventArgs e)
+      /*  private void btn_vacancy_Click(object sender, RoutedEventArgs e)
         {
             if (_vacancy == true)
             {
@@ -61,8 +59,8 @@ namespace Vacancy.Pages
                 btn_responses.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
             }
         }
-
-        private void btn_myResume_Click(object sender, RoutedEventArgs e)
+*/
+        /*private void btn_myResume_Click(object sender, RoutedEventArgs e)
         {
             if (_resume == true)
             {
@@ -81,12 +79,12 @@ namespace Vacancy.Pages
                 btn_responses.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
             }
         }
-
+*/
         private void loadPage()
         {
             if (_profile == true)
             {
-                frameApp.Navigate(new ProfilePage());
+                frameApp.Navigate(new ProfileEmployerPage());
                 _profile = false;
                 btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
                 btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
