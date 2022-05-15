@@ -113,7 +113,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CInfo.cs" />
-    <Compile Include="Models\CModelVac.cs" />
+    <Compile Include="Models\CWordHelper.cs" />
     <Compile Include="Pages\ApplicantPage.xaml.cs">
       <DependentUpon>ApplicantPage.xaml</DependentUpon>
     </Compile>
@@ -132,17 +132,26 @@
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ResponsesEmpPage.xaml.cs">
+      <DependentUpon>ResponsesEmpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ResponsesPage.xaml.cs">
       <DependentUpon>ResponsesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ResumeAppPage.xaml.cs">
       <DependentUpon>ResumeAppPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ResumeEmpPage.xaml.cs">
+      <DependentUpon>ResumeEmpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SignUpAndLogInPage.xaml.cs">
       <DependentUpon>SignUpAndLogInPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\VacanciesPage.xaml.cs">
       <DependentUpon>VacanciesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\VacancyEmpPage.xaml.cs">
+      <DependentUpon>VacancyEmpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="procStr_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -160,6 +169,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="selectResponsesApp_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="selectResponsesEmp_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="selectResumeComboBox_Result.cs">
@@ -180,6 +192,9 @@
     <Compile Include="SubWindows\createResumeWindow.xaml.cs">
       <DependentUpon>createResumeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\createVacancyWindow.xaml.cs">
+      <DependentUpon>createVacancyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -190,6 +205,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="vacancy.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vacancyView.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\viewModelClass.cs" />
@@ -233,11 +251,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ResponsesEmpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ResponsesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ResumeAppPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ResumeEmpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,7 +275,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\VacancyEmpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SubWindows\createResumeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\createVacancyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +306,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Template-resume.doc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Resource Include="Fonts\Comfortaa.ttf" />
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -315,6 +352,35 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

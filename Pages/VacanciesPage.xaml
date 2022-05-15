@@ -18,8 +18,8 @@
                 <ComboBoxItem>По зарплате</ComboBoxItem>
             </ComboBox>
         </StackPanel>
-        <Border Style="{DynamicResource borderStyle}" Grid.Row="1" Grid.Column="0" Width="auto">
-            <ListView Style="{DynamicResource listStyle}" ItemsSource="{Binding Items}" Grid.Row="1" Grid.Column="0" SelectionChanged="listVac_SelectionChanged" x:Name="listVac" HorizontalAlignment="Center">
+        <Border HorizontalAlignment="Stretch" Style="{DynamicResource borderStyle}" Grid.Row="1" Grid.Column="0" Width="auto">
+            <ListView HorizontalAlignment="Stretch" Style="{DynamicResource listStyle}" ItemsSource="{Binding Items}" Grid.Row="1" Grid.Column="0" SelectionChanged="listVac_SelectionChanged" x:Name="listVac" >
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{DynamicResource myHeaderStyle}">
                         <GridViewColumn>
@@ -46,7 +46,7 @@
                         <TextBlock Style="{DynamicResource textblockStyle}" Text="{Binding StringFormat=\{0\}}" HorizontalAlignment="Center" Margin="10" Width="560" x:Name="txt_salaryVac" TextAlignment="Center" FontSize="26" TextWrapping="Wrap" />
                         <TextBlock Style="{DynamicResource textblockStyle}" HorizontalAlignment="Center" Margin="10" Width="560" x:Name="txt_companyVac" TextAlignment="Center" FontSize="26" />
                         <TextBlock Style="{DynamicResource textblockStyle}" Margin="10" TextWrapping="Wrap" x:Name="txt_itemVac" FontSize="18" HorizontalAlignment="Stretch" Width="540" />
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Style="{DynamicResource buttonStyle}" Margin="10" x:Name="btnRespons" FontSize="16" Content="Откликнуться" Width="150" Height="30" Click="btnRespons_Click" />
                             <TextBlock Style="{DynamicResource textblockStyle}" Margin="20,5" Text="{Binding  ElementName=ComboResume, Path=SelectedValue}" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             <ComboBox Style="{DynamicResource comboboxStyle}" ItemsSource="{Binding Path=item}" SelectedValue="{Binding Path=item}" SelectedValuePath="ID_resume" DisplayMemberPath="req_position"  Height="30" x:Name="ComboResume" Width="230" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" />

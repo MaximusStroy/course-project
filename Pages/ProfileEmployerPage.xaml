@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProfileEmployerPage">
-
+    <Border Style="{DynamicResource borderStyle}"
+            Width="auto"
+            HorizontalAlignment="Stretch">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -140,5 +142,39 @@
             Grid.Row="6"
             Margin="10"
             TextWrapping="Wrap"/>
-    </Grid>
+        <Button
+            x:Name="btnChangeEmployeeProfile"
+            Style="{DynamicResource buttonStyle}"
+            Margin="10"
+            Width="120"
+            Content="Изменить"
+            FontSize="16"
+            Grid.Row="7"
+            Grid.Column="0" Click="btnChangeEmployeeProfile_Click"/>
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Grid.Row="7"
+            Grid.Column="1">
+            <Button
+            x:Name="btnSaveProfile"
+            Style="{DynamicResource buttonStyle}"
+            Margin="10"
+            Width="120"
+            Content="Сохранить"
+            FontSize="16"
+            Grid.Row="7"
+            Grid.Column="0" Click="btnSaveProfile_Click"/>
+            <Button
+            x:Name="btnCancelProfile"
+            Style="{DynamicResource buttonStyle}"
+            Margin="10"
+            Width="120"
+            Content="Отменить"
+            FontSize="16"
+            Grid.Row="7"
+            Grid.Column="0" Click="btnCancelProfile_Click"/>
+        </StackPanel>
+        </Grid>
+    </Border>
 </Page>

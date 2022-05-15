@@ -31,20 +31,22 @@
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="МОЙ ПРОФИЛЬ"/>
-            <Button x:Name="btn_myResume"
+                Content="МОЙ ПРОФИЛЬ" 
+                    Click="btn_myProfile_Click"/>
+            <Button x:Name="btnResume"
                 Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
-                Content="РЕЗЮМЕ"/>
+                Content="РЕЗЮМЕ" Click="btnResume_Click"/>
             <Button x:Name="btn_vacancy"
                 Style="{DynamicResource buttonStyle}"
                 Height="30"
                 FontSize="16"
                 Margin="5"
                 Width="auto"
+                Click="btn_vacancy_Click"
                 Content="МОИ ВАКАНСИИ"/>
             <Button
                 Style="{DynamicResource buttonStyle}"
@@ -53,6 +55,7 @@
                 Name="btn_responses"
                 Margin="5"
                 Width="auto"
+                Click="Button_Click"
                 Content="ОТКЛИКИ"/>
         </StackPanel>
         <Button x:Name="btn_Exit"
@@ -71,5 +74,16 @@
             Grid.RowSpan="2"
             Grid.Column="1">
         </Frame>
+        <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{DynamicResource ResourceKey=textblockStyle}"
+                Height="30"
+                FontSize="14"
+                VerticalAlignment="Bottom"
+            Margin="10"
+                Width="auto"
+                Text="Р А Б О Т О Д А Т Е Л Ь"
+                TextAlignment="Center" />
     </Grid>
 </Page>

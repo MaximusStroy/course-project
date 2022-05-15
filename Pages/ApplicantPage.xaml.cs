@@ -34,6 +34,7 @@ namespace Vacancy.Pages
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Pages/LogInPage.xaml", UriKind.Relative));
+            Models.CInfo.id_app = 0;
         }
 
         private void btn_myProfile_Click(object sender, RoutedEventArgs e)

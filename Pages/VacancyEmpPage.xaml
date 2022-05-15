@@ -1,0 +1,100 @@
+﻿<Page x:Class="Vacancy.Pages.VacancyEmpPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Vacancy.Pages"
+      mc:Ignorable="d" 
+      xml:lang="ru"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="VacancyEmpPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border HorizontalAlignment="Stretch" Style="{DynamicResource borderStyle}" Grid.Row="0" Grid.Column="0" Width="auto" Height="auto">
+            <ListView HorizontalAlignment="Stretch" Style="{DynamicResource listStyle}" Grid.Row="1" Grid.Column="0" x:Name="listVac" SelectionChanged="listVac_SelectionChanged" >
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{DynamicResource myHeaderStyle}">
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Style="{DynamicResource borderStyle}">
+                                        <StackPanel>
+                                            <TextBlock Style="{DynamicResource textblockStyle}" Text="{Binding post}" Margin="5" />
+                                            <TextBlock Margin="5" Style="{DynamicResource textblockStyle}" Text="{Binding salary, StringFormat=\{0:C0\}}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0">
+            <Button Style="{DynamicResource buttonStyle}" Content="Создать вакансию" Margin="10" Width="120" Height="30" x:Name="btnCreateVacancy" Click="btnCreateVacancy_Click"/>
+            <Button Style="{DynamicResource buttonStyle}" Content="Удалить вакансию" Margin="10" Width="120" Height="30" x:Name="btnDeleteVacancy" Click="btnDeleteVacancy_Click"/>
+        </StackPanel>
+        <Border Style="{DynamicResource borderStyle}" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Width="auto">
+            <ScrollViewer x:Name="scrollView" HorizontalAlignment="Stretch" Width="auto" VerticalScrollBarVisibility="Visible">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Style="{DynamicResource textblockStyle}" FontWeight="Bold" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" Text="Вакансия №" />
+                        <TextBlock Style="{DynamicResource textblockStyle}" x:Name="txt_numVacancy" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" />
+                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="7" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Должность" />
+                        <TextBlock Grid.Row="8" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Bottom" Text="Зарплата" />
+                        <TextBlock Grid.Row="9" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Компетенция" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Компания" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="О компании" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Контактное лицо" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Номер контактного лица" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Номер компании" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource textblockStyle}" TextWrapping="Wrap" FontSize="16" Margin="20,5,5,5" VerticalAlignment="Center" Text="Юридический адрес" />
+
+                        <Rectangle Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="#003b46" Height="1" Margin="20,5"/>
+
+                        <TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource boxStyle}" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_nameVac" />
+                        <TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource boxStyle}" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_salaryVac" />
+                        <TextBox Grid.Row="9" Grid.Column="1" Style="{DynamicResource boxStyle}" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_competencies" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource boxStyle}" IsReadOnly="true" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_companyVac" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource boxStyle}" IsReadOnly="true" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_titleCompany" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource boxStyle}" IsReadOnly="true" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_contactFace" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource boxStyle}" IsReadOnly="true" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_numberFace" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource boxStyle}" IsReadOnly="true" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_numberCompany" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource boxStyle}" IsReadOnly="true" TextWrapping="Wrap" MinHeight="30" Margin="20,5" VerticalAlignment="Center" x:Name="txt_addressCompany" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                        <Button Style="{DynamicResource buttonStyle}" Margin="10" x:Name="btnChangeVacanxy" FontSize="16" Content="Изменить" Width="120" Height="30" Click="btnChangeVacanxy_Click" />
+                        <Button Style="{DynamicResource buttonStyle}" Margin="10" x:Name="btnSaveVacancy" FontSize="16" Content="Сохранить" Width="120" Height="30" Click="btnSaveVacancy_Click" />
+                        <Button Style="{DynamicResource buttonStyle}" Margin="10" x:Name="btnCancelVacancy" FontSize="16" Content="Отменить" Width="120" Height="30" Click="btnCancelVacancy_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Page>

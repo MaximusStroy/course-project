@@ -10,11 +10,14 @@
 namespace Vacancy
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class competencies
+    public partial class selectResponsesEmp_Result
     {
-        public long ID_competencies { get; set; }
-        public string Name_comp { get; set; }
+        public long ID_respone { get; set; }
+        public string req_position { get; set; }
+        public Nullable<decimal> req_salary { get; set; }
+        public string post { get; set; }
+        public decimal salary { get; set; }
+        public Nullable<bool> flag { get; set; }
     }
 }

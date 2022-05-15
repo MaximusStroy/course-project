@@ -12,22 +12,18 @@ namespace Vacancy
     using System;
     using System.Collections.Generic;
     
-    public partial class vacancy
+    public partial class vacancyView
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public vacancy()
-        {
-            this.responses = new HashSet<responses>();
-        }
-    
-        public long ID_vac { get; set; }
         public long ID_employee { get; set; }
         public string post { get; set; }
-        public Nullable<decimal> salary { get; set; }
+        public decimal salary { get; set; }
+        public string name_employee { get; set; }
+        public string number_phone_emp { get; set; }
+        public string name_company { get; set; }
+        public string address_company { get; set; }
+        public string phone_company { get; set; }
+        public string title_company { get; set; }
         public string competencies { get; set; }
-    
-        public virtual employers employers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<responses> responses { get; set; }
+        public string address_employee { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace Vacancy.Pages
                 resumes = (from x in db.resume_tab
                            join ap in db.applicants on x.ID_applicant equals ap.ID_applicant
                            join us in db.users on ap.ID_user equals us.ID_user
-                           where us.ID_user == Models.CInfo.status
+                           where ap.ID_applicant == Models.CInfo.id_app
                            select x).ToList() ;
             }
             listRes.ItemsSource = resumes;
@@ -133,21 +133,26 @@ namespace Vacancy.Pages
             }
         }
         
-
         private void btnDeleteResume_Click(object sender, RoutedEventArgs e)
         {
-            var a = MessageBox.Show("Вы уверены что хотите удаить резюме?", "Удаление резюме", MessageBoxButton.OKCancel);
-            if (a == MessageBoxResult.OK)
+            try
             {
-                using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
+                var a = MessageBox.Show("Вы уверены что хотите удаить резюме?", "Удаление резюме", MessageBoxButton.OKCancel);
+                if (a == MessageBoxResult.OK)
                 {
-                    var resDel = (resume_tab)listRes.SelectedItem;
+                    using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
+                    {
+                        var resDel = (resume_tab)listRes.SelectedItem;
 
-                    db.dropResume((int)resDel.ID_resume);
+                        db.dropResume((int)resDel.ID_resume);
 
-                    clearScroll();
-                    openList();
+                        clearScroll();
+                        openList();
+                    }
                 }
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -196,28 +201,6 @@ namespace Vacancy.Pages
         private void btnChangeResume_Click(object sender, RoutedEventArgs e)
         {
             isEnabledTextbox(false);
-        }
-
-        private string convertMoneyToStr(string s)
-        {
-            string result = "";
-            bool flag = true;
-            for (int i = 0; i < s.Length; i++)
-            {
-
-                if (s[i] != ' ')
-                {
-                    result += s[i];
-                    if (s[i] == ',')
-                    {
-                        break;
-                        flag = false;
-                    }
-                }
-                if (false == flag) break;
-            }
-
-            return result;
         }
 
         private void btnChangeSave_Click(object sender, RoutedEventArgs e)
@@ -281,7 +264,7 @@ namespace Vacancy.Pages
                     };
                     if (txtSummarySalary.Text != "")
                     {
-                        string str = convertMoneyToStr(String.Format("{0:C}", txtSummarySalary.Text));
+                        string str = cInfo.convertMoneyToStr(String.Format("{0:C}", txtSummarySalary.Text));
                         app.req_salary = Convert.ToDecimal(str);
                     };
 
@@ -294,6 +277,40 @@ namespace Vacancy.Pages
                 MessageBox.Show(ex.Message);
             }
             finally { openList(); }
+        }
+
+        private void btnToWord_Click(object sender, RoutedEventArgs e)
+        {
+            var helper = new Models.CWordHelper("Template-resume.doc");
+
+            string fio = txt_lastname.Text + " " + txt_name.Text + " " + txt_middlename.Text;
+
+            var items = new Dictionary<string, string>
+            {
+                { "<FIO>", fio},
+                { "<POST>", txtSummaryPost.Text},
+                { "<SALARY>", txtSummarySalary.Text},
+                { "<PHONE>", txt_phone.Text},
+                { "<MAIL>", txt_mail.Text},
+                { "<CITY>", txt_city.Text},
+                { "<SUMMARY>", txtSummary.Text },
+                { "<LASTPOST>", txtExperPost.Text },
+                { "<LASTTITLEPOST>", txtExperTitle.Text },
+                { "<LASTYEARS>", txtExperDate.Text },
+                { "<COLLEGE>", txtNameEducation.Text },
+                { "<YEAREND>", txtYearEndEducation.Text },
+                { "<SPEC>", txtSpecialEducation.Text },
+                { "<SKILLS>", txtSkills.Text },
+                { "<LANGUAGE>", txtLanguages.Text }
+            };
+
+            if (helper.Process(items))
+            {
+                MessageBox.Show("Файл успешно экспортирован в Word");
+            } else
+            {
+                MessageBox.Show("Возникли проблемы с экспортом файла");
+            }
         }
     }
 }

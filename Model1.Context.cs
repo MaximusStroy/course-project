@@ -37,6 +37,7 @@ namespace Vacancy
         public virtual DbSet<types_users> types_users { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<vacancy> vacancy { get; set; }
+        public virtual DbSet<vacancyView> vacancyView { get; set; }
     
         [DbFunction("RecruitmentAgencyEntities", "procStr")]
         public virtual IQueryable<procStr_Result> procStr(string s)
@@ -76,6 +77,16 @@ namespace Vacancy
                 new ObjectParameter("idApp", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<selectResponsesApp_Result>("[RecruitmentAgencyEntities].[selectResponsesApp](@idApp)", idAppParameter);
+        }
+    
+        [DbFunction("RecruitmentAgencyEntities", "selectResponsesEmp")]
+        public virtual IQueryable<selectResponsesEmp_Result> selectResponsesEmp(Nullable<int> idApp)
+        {
+            var idAppParameter = idApp.HasValue ?
+                new ObjectParameter("idApp", idApp) :
+                new ObjectParameter("idApp", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<selectResponsesEmp_Result>("[RecruitmentAgencyEntities].[selectResponsesEmp](@idApp)", idAppParameter);
         }
     
         [DbFunction("RecruitmentAgencyEntities", "selectResume")]
@@ -214,6 +225,15 @@ namespace Vacancy
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int dropVacancy(Nullable<int> idRes)
+        {
+            var idResParameter = idRes.HasValue ?
+                new ObjectParameter("idRes", idRes) :
+                new ObjectParameter("idRes", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dropVacancy", idResParameter);
         }
     }
 }

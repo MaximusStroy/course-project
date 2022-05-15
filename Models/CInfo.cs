@@ -13,6 +13,30 @@ namespace Vacancy.Models
         public static int id_vac;
 
         public static int id_app;
+
+        public string convertMoneyToStr(string s)
+        {
+            string result = "";
+            bool flag = true;
+            for (int i = 0; i < s.Length; i++)
+            {
+
+                if (s[i] != ' ')
+                {
+                    result += s[i];
+                    if (s[i] == ',')
+                    {
+                        break;
+                        flag = false;
+                    }
+                }
+                if (false == flag) break;
+            }
+
+            return result;
+        }
+
+
         public string convertJsonToString(dynamic _dynamic)
         {
             string result = "";

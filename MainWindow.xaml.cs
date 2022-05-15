@@ -18,12 +18,14 @@ namespace Vacancy
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
-        public int status = 0;
         public MainWindow()
         {
             InitializeComponent();
+
 
             frame.Navigate(new Pages.SignUpAndLogInPage());
         }
@@ -36,4 +38,5 @@ namespace Vacancy
             }
         }
     }
+
 }

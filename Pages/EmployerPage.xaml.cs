@@ -31,7 +31,8 @@ namespace Vacancy.Pages
         private bool _response = false;
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/LogInPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("Pages/ChangeStatusPage.xaml", UriKind.Relative));
+            Models.CInfo.id_app = 0;
         }
 
         private void btn_myProfile_Click(object sender, RoutedEventArgs e)
@@ -39,18 +40,18 @@ namespace Vacancy.Pages
             loadPage();
         }
 
-      /*  private void btn_vacancy_Click(object sender, RoutedEventArgs e)
+       private void btn_vacancy_Click(object sender, RoutedEventArgs e)
         {
             if (_vacancy == true)
             {
-                frameApp.Navigate(new VacanciesPage());
+                frameApp.Navigate(new VacancyEmpPage());
                 _profile = true;
                 _resume = true;
                 _vacancy = false;
                 btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("light");
                 btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
-                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
-                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                btnResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btnResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
                 btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
                 btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
                 _response = true;
@@ -59,27 +60,7 @@ namespace Vacancy.Pages
                 btn_responses.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
             }
         }
-*/
-        /*private void btn_myResume_Click(object sender, RoutedEventArgs e)
-        {
-            if (_resume == true)
-            {
-                frameApp.Navigate(new ResumeAppPage());
-                _profile = true;
-                _resume = false;
-                _vacancy = true;
-                btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("light");
-                btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
-                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
-                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
-                btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("light");
-                btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
-                _response = true;
-                btn_responses.Background = (Brush)Application.Current.MainWindow.FindResource("light");
-                btn_responses.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
-            }
-        }
-*/
+
         private void loadPage()
         {
             if (_profile == true)
@@ -89,8 +70,8 @@ namespace Vacancy.Pages
                 btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
                 btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
                 _resume = true;
-                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
-                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                btnResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btnResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
                 _vacancy = true;
                 btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("light");
                 btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
@@ -105,15 +86,15 @@ namespace Vacancy.Pages
         {
             if (_response == true)
             {
-                frameApp.Navigate(new ResponsesPage());
+                frameApp.Navigate(new ResponsesEmpPage());
                 _profile = true;
                 _resume = true;
                 _vacancy = true;
                 _response = false;
                 btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("light");
                 btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
-                btn_myResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
-                btn_myResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                btnResume.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btnResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
                 btn_responses.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
                 btn_responses.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
                 btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("light");
@@ -121,5 +102,26 @@ namespace Vacancy.Pages
 
             }
         }
+
+        private void btnResume_Click(object sender, RoutedEventArgs e)
+        {
+            if (_resume == true)
+            {
+                frameApp.Navigate(new ResumeEmpPage());
+                _profile = true;
+                _resume = false;
+                _vacancy = true;
+                btn_myProfile.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_myProfile.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                btnResume.Background = (Brush)Application.Current.MainWindow.FindResource("dark");
+                btnResume.Foreground = (Brush)Application.Current.MainWindow.FindResource("theLightest");
+                btn_vacancy.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_vacancy.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+                _response = true;
+                btn_responses.Background = (Brush)Application.Current.MainWindow.FindResource("light");
+                btn_responses.Foreground = (Brush)Application.Current.MainWindow.FindResource("theDarkest");
+            }
+        }
+
     }
 }

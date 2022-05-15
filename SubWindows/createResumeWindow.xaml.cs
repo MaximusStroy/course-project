@@ -42,11 +42,15 @@ namespace Vacancy.SubWindows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            var mess = MessageBox.Show("Вы хотите выйти?", "Выход", MessageBoxButton.YesNo);
+            if (mess == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            var mess = MessageBox.Show("Вы уверены что хотите очистить все поля?", "Очистка полей", MessageBoxButton.YesNo);
+            var mess = MessageBox.Show("Вы уверены что хотите отменить создание вакансии?", "Отменя создания вакансии", MessageBoxButton.YesNo);
             if (mess == MessageBoxResult.Yes)
             {
                 txtExperDate_w.Clear();
@@ -70,8 +74,7 @@ namespace Vacancy.SubWindows
         }
         private void loadContactInfo()
         {
-            var mess = MessageBox.Show("Загрузить контактную информацию из личного профиля?", "Загрузка", MessageBoxButton.YesNo);
-            if (mess == MessageBoxResult.Yes)
+            try
             {
                 using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
                 {
@@ -85,6 +88,10 @@ namespace Vacancy.SubWindows
                     txt_mail_w.Text = db.selectProfile(Models.CInfo.status).First().email_app.ToString();
                     txt_phone_w.Text = db.selectProfile(Models.CInfo.status).First().number_phone_app.ToString();
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private void isEnabledTextbox(bool _bool)

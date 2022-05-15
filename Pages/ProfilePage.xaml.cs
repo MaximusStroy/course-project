@@ -48,17 +48,21 @@ namespace Vacancy.Pages
                 {
                     var m = new Models.CInfo();
 
-                    txt_lastname.Text = db.selectProfile(Models.CInfo.status).First().lastname_applicant.ToString();
-                    txt_name.Text = db.selectProfile(Models.CInfo.status).First().name_applicant.ToString();
-                    txt_middlename.Text = db.selectProfile(Models.CInfo.status).First().middlename_applicant.ToString();
-                    txt_age.Text = m.datatimeConvert(db.selectProfile(Models.CInfo.status).First().birthday_app.ToString());
-                    txt_country.Text = db.selectProfile(Models.CInfo.status).First().address_app.ToString();
-                    txt_mail.Text = db.selectProfile(Models.CInfo.status).First().email_app.ToString();
-                    txt_phone.Text = db.selectProfile(Models.CInfo.status).First().number_phone_app.ToString();
+                    var profileApp = (from app in db.applicants
+                                      where app.ID_applicant == Models.CInfo.id_app
+                                      select app).ToList();
 
-                    if (db.selectProfile(Models.CInfo.status).First().imageData != null)
+                    txt_lastname.Text = profileApp.First().lastname_applicant.ToString();
+                    txt_name.Text = profileApp.First().name_applicant.ToString();
+                    txt_middlename.Text = profileApp.First().middlename_applicant.ToString();
+                    txt_age.Text = m.datatimeConvert(profileApp.First().birthday_app.ToString());
+                    txt_country.Text = profileApp.First().address_app.ToString();
+                    txt_mail.Text = profileApp.First().email_app.ToString();
+                    txt_phone.Text = profileApp.First().number_phone_app.ToString();
+
+                    if (profileApp.First().imageData != null)
                     {
-                        byte[] arrayByte = db.selectProfile(Models.CInfo.status).First().imageData;
+                        byte[] arrayByte = profileApp.First().imageData;
 
                         MemoryStream memoryStream = new MemoryStream();
                         memoryStream.Write(arrayByte, 0, (int)arrayByte.Length);
@@ -111,11 +115,10 @@ namespace Vacancy.Pages
                     _enable(true);
 
                     var app = db.applicants
-                        .Where(x => x.ID_user == Models.CInfo.status)
+                        .Where(x => x.ID_applicant == Models.CInfo.id_app)
                         .FirstOrDefault();
 
-                    Models.CInfo.id_app = (int)app.ID_applicant;
-
+                    
                     if (txt_lastname.Text != person["lastname"]) app.lastname_applicant = txt_lastname.Text;
                     if (txt_name.Text != person["name"]) app.name_applicant = txt_name.Text;
                     if (txt_middlename.Text != person["middlename"]) app.middlename_applicant = txt_middlename.Text;

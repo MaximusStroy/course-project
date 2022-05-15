@@ -27,6 +27,7 @@ namespace Vacancy.Pages
         public LogInPage()
         {
             InitializeComponent();
+
         }
         public void LogIn()
         {
@@ -44,6 +45,7 @@ namespace Vacancy.Pages
                                            select new
                                            {
                                                idUser = us.ID_user,
+                                               lastname = e.name_employee,
                                                type = us.ID_type_user,
                                                login = us.login_user,
                                                pass = us.password_user,
@@ -53,6 +55,7 @@ namespace Vacancy.Pages
                         {
                             NavigationService.Navigate(new Uri("Pages/EmployerPage.xaml", UriKind.Relative));
                             Models.CInfo.id_app = (int)findingUser.First().idApp;
+                            MessageBox.Show($"Человек: {findingUser.First().lastname} : IDemp = {findingUser.First().idApp}");
                         }
                         else MessageBox.Show("Пользователь не найден");
                         break;
@@ -66,6 +69,7 @@ namespace Vacancy.Pages
                                            select new
                                            {
                                                idUser = us.ID_user,
+                                               lastname = app.lastname_applicant,
                                                type = us.ID_type_user,
                                                login = us.login_user,
                                                pass = us.password_user,
@@ -75,6 +79,7 @@ namespace Vacancy.Pages
                         {
                             NavigationService.Navigate(new Uri("Pages/ApplicantPage.xaml", UriKind.Relative));
                             Models.CInfo.id_app = (int)findingUser.First().idApp;
+                            MessageBox.Show($"Человек: {findingUser.First().lastname} : IDemp = {findingUser.First().idApp}");
                         }
                         break;
                 }
