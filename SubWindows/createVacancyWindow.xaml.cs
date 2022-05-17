@@ -92,17 +92,28 @@ namespace Vacancy.SubWindows
             {
                 using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
                 {
-                    var vac = (from vv in db.vacancyView
-                               where vv.ID_employee == Models.CInfo.id_app
-                               select vv).FirstOrDefault();
+                    var vac = (from e in db.employers
+                                          from comp in db.companyMany
+                                          where e.ID_company == comp.ID_company
+                                          where e.ID_employee == Models.CInfo.id_app
+                                          select new
+                                          {
+                                              contactFace = e.name_employee,
+                                              contactNumber = e.number_phone_emp,
+                                              nameCompany = comp.name_company,
+                                              addressCompany = comp.address_company,
+                                              phoneCompany = comp.phone_company,
+                                              titleCompany = comp.title_company
+                                          }).ToList();
 
-                    txt_contactFace.Text = vac.name_employee.ToString();
-                    txt_companyVac.Text = vac.name_company.ToString();
-                    txt_addressCompany.Text = vac.address_company.ToString();
-                    txt_numberCompany.Text = vac.phone_company.ToString();
-                    txt_numberFace.Text = vac.number_phone_emp.ToString();
-                    txt_titleCompany.Text = vac.title_company.ToString();
+                        txt_contactFace.Text = vac.First().contactFace.ToString();
+                        txt_companyVac.Text = vac.First().nameCompany.ToString();
+                        txt_addressCompany.Text = vac.First().addressCompany.ToString();
+                        txt_numberCompany.Text = vac.First().phoneCompany.ToString();
+                        txt_numberFace.Text = vac.First().contactNumber.ToString();
+                        txt_titleCompany.Text = vac.First().titleCompany.ToString();
                 }
+                
             }
             catch (Exception ex)
             {

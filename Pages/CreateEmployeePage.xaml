@@ -15,24 +15,28 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="ИНФОРМАЦИЯ ПРОФИЛЯ" FontSize="30" TextAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource textblockStyle}" />
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Контактное лицо" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Телефон контактного лица" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Компания" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес компании" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Телефон компании" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="О компании" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Адрес контактного лица" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
+            <TextBlock Grid.Row="4" Grid.RowSpan="2" Grid.Column="0" Text="Компания" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Адрес компании" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Телефон компании" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="О компании" FontSize="16" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource textblockStyle}" />
             <TextBox x:Name="txtContactTitle" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="1" Margin="10" MaxLength="50" TextWrapping="Wrap" />
             <TextBox Name="txtNumberContactTitle" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="2" Margin="10" MaxLength="50" TextWrapping="Wrap" />
-            <ComboBox Name="txtNameCompany" Style="{DynamicResource comboboxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="3" Margin="10" ItemsSource="{Binding Path=item}" SelectedValue="{Binding Path=item}" SelectedValuePath="ID_company" DisplayMemberPath="name_company" SelectionChanged="txtNameCompany_SelectionChanged"/>
-            <TextBox Name="txtAddressCompany" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="4" Margin="10" MaxLength="50" TextWrapping="Wrap" />
-            <TextBox Name="txtNumberCompany" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="5" Margin="10" MaxLength="50" TextWrapping="Wrap" />
-            <TextBox Name="txtCompanyTitle" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="6" Margin="10" TextWrapping="Wrap" />
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
-                <TextBlock Style="{DynamicResource textblockStyle}" Text="{Binding ElementName=txtNameCompany, Path=SelectedValue}" Name="id"/>
-                <Button x:Name="btnSaveProfile" Style="{DynamicResource buttonStyle}" Margin="10" Width="120" Content="Сохранить" FontSize="16" Grid.Row="7" Grid.Column="0" />
-                <Button x:Name="btnCancelProfile" Style="{DynamicResource buttonStyle}" Margin="10" Width="120" Content="Отменить" FontSize="16" Grid.Row="7" Grid.Column="0" />
+            <TextBox Name="txtAddressContactTitle" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="3" Margin="10" MaxLength="50" TextWrapping="Wrap" />
+            <ComboBox Name="txtNameCompany" Style="{DynamicResource comboboxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="4" Margin="10" DisplayMemberPath="name_company" SelectionChanged="txtNameCompany_SelectionChanged"/>
+            <TextBox Name="txtCompany" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="5" Margin="10" MaxLength="50" TextWrapping="Wrap" />
+            <TextBox Name="txtAddressCompany" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="6" Margin="10" MaxLength="50" TextWrapping="Wrap" />
+            <TextBox Name="txtNumberCompany" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="7" Margin="10" MaxLength="50" TextWrapping="Wrap" />
+            <TextBox Name="txtCompanyTitle" Style="{DynamicResource boxStyle}" MinHeight="30" Grid.Column="1" Grid.Row="8" Margin="10" TextWrapping="Wrap" />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2">
+                <Button x:Name="btnSaveProfile" Style="{DynamicResource buttonStyle}" Margin="10" Width="120" Content="Сохранить" FontSize="16" Grid.Row="7" Grid.Column="0" Click="btnSaveProfile_Click" />
+                <Button x:Name="btnCancelProfile" Style="{DynamicResource buttonStyle}" Margin="10" Width="120" Content="Отменить" FontSize="16" Grid.Row="7" Grid.Column="0" Click="btnCancelProfile_Click" />
             </StackPanel>
         </Grid>
     </Border>
