@@ -14,6 +14,10 @@ namespace Vacancy.Models
 
         public static int id_app;
 
+        public static string login;
+
+        public static string password;
+
         public string convertMoneyToStr(string s)
         {
             string result = "";

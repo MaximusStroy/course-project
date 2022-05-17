@@ -32,7 +32,6 @@ namespace Vacancy.Pages
             InitializeComponent();
             ComboType.SelectedIndex = 0;
             Loaded += VacanciesPage_Loaded;
-            listVac.SelectedIndex = 0;
             comboboxUpdate();
         }
 
@@ -48,7 +47,7 @@ namespace Vacancy.Pages
                 }
             }
             listVac.ItemsSource = vacancies.ToList();
-
+            listVac.SelectedIndex = 0;
         }
 
         private void comboboxUpdate()
@@ -59,6 +58,7 @@ namespace Vacancy.Pages
             DataContext = comboResumes;
             ComboResume.ItemsSource = comboResumes.ToList();
             ComboResume.SelectedItem = 2;
+            ComboResume.SelectedIndex = 0;
         }
 
 
@@ -86,7 +86,8 @@ namespace Vacancy.Pages
             switch (ComboType.SelectedIndex)
             {
                 case 0:
-                    listVac.ItemsSource = vacancies.ToList();
+                    listVac.ItemsSource = vacancies.ToList(); 
+                    listVac.SelectedIndex = 0;
                     break;
                 case 1:
                     using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
@@ -96,6 +97,7 @@ namespace Vacancy.Pages
                                      select x).ToList();
                     }
                     listVac.ItemsSource = filteredList.ToList();
+                    listVac.SelectedIndex = 0;
                     break;
                 case 2:
                     using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
@@ -105,6 +107,7 @@ namespace Vacancy.Pages
                                      select x).ToList();
                     }
                     listVac.ItemsSource = filteredList.ToList();
+                    listVac.SelectedIndex = 0;
                     break;
             }
         }
@@ -119,9 +122,13 @@ namespace Vacancy.Pages
                                     where x.post.ToLower().Contains(txt_find.Text.ToLower())
                                     select x).ToList();
                 }
-                listVac.ItemsSource = filteredList.ToList();
+                listVac.ItemsSource = filteredList.ToList(); listVac.SelectedIndex = 0;
             }
-            else listVac.ItemsSource = vacancies.ToList();
+            else
+            {
+                listVac.ItemsSource = vacancies.ToList();
+                listVac.SelectedIndex = 0;
+            }
         }
 
         private void btnRespons_Click(object sender, RoutedEventArgs e)
@@ -145,6 +152,7 @@ namespace Vacancy.Pages
                     {
                         db.responses.Add(_responses);
                         db.SaveChanges();
+                        MessageBox.Show("Ваше резюме юыло направлено работодателю!");
                     }
                     else
                     {

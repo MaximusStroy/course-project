@@ -31,8 +31,18 @@ namespace Vacancy.Pages
         private bool _response = false;
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/ChangeStatusPage.xaml", UriKind.Relative));
-            Models.CInfo.id_app = 0;
+            try
+            {
+                if ((MessageBox.Show("Вы уверены что хотите выйти из учетной записи?", "Выход из учетной записи", MessageBoxButton.YesNo)) == MessageBoxResult.Yes)
+                {
+                    NavigationService.Navigate(new Uri("Pages/ChangeStatusPage.xaml", UriKind.Relative));
+                    Models.CInfo.id_app = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_myProfile_Click(object sender, RoutedEventArgs e)

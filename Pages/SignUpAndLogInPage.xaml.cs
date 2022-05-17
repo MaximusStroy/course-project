@@ -29,5 +29,10 @@ namespace Vacancy.Pages
         {
             NavigationService.Navigate(new Uri("Pages/ChangeStatusPage.xaml", UriKind.Relative));
         }
+
+        private void SignUpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Pages/RegisterPage.xaml", UriKind.Relative));
+        }
     }
 }

@@ -80,13 +80,17 @@ namespace Vacancy.SubWindows
                 {
                     var m = new Models.CInfo();
 
-                    txt_lastname_w.Text = db.selectProfile(Models.CInfo.status).First().lastname_applicant.ToString();
-                    txt_name_w.Text = db.selectProfile(Models.CInfo.status).First().name_applicant.ToString();
-                    txt_middlename_w.Text = db.selectProfile(Models.CInfo.status).First().middlename_applicant.ToString();
-                    txt_birth_w.Text = m.datatimeConvert(db.selectProfile(Models.CInfo.status).First().birthday_app.ToString());
-                    txt_city_w.Text = db.selectProfile(Models.CInfo.status).First().address_app.ToString();
-                    txt_mail_w.Text = db.selectProfile(Models.CInfo.status).First().email_app.ToString();
-                    txt_phone_w.Text = db.selectProfile(Models.CInfo.status).First().number_phone_app.ToString();
+                    var prof = (from a in db.applicants
+                                where a.ID_applicant == Models.CInfo.id_app
+                                select a).FirstOrDefault();
+
+                    txt_lastname_w.Text = prof.lastname_applicant.ToString();
+                    txt_name_w.Text = prof.name_applicant.ToString();
+                    txt_middlename_w.Text = prof.middlename_applicant.ToString();
+                    txt_birth_w.Text = m.datatimeConvert(prof.birthday_app.ToString());
+                    txt_city_w.Text = prof.address_app.ToString();
+                    txt_mail_w.Text = prof.email_app.ToString();
+                    txt_phone_w.Text = prof.number_phone_app.ToString();
                 }
             }
             catch(Exception ex)

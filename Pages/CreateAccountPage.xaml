@@ -1,0 +1,103 @@
+﻿<Page x:Class="Vacancy.Pages.CreateAccountPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Vacancy.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CreateAccountPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Width="200"
+            Orientation="Vertical"
+            VerticalAlignment="Center"
+            Margin="100,0,250,0"
+            Grid.Row="0"
+            Grid.Column="1">
+            <TextBlock
+                Margin="5"
+                Style="{DynamicResource textblockStyle}"
+                Text="Придумайте логин"
+                FontSize="16"/>
+            <TextBox
+                Style="{DynamicResource boxStyle}"
+                Margin="5"
+                x:Name="txt_logIn"
+                FontSize="16"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Height="30" MaxLength="50" TextChanged="txt_logIn_TextChanged"/>
+            <TextBlock
+                Margin="5"
+                x:Name="txtCheckLog"
+                Style="{DynamicResource textblockStyle}"
+                FontSize="10"/>
+            <TextBlock
+                Margin="5"
+                Style="{DynamicResource textblockStyle}"
+                FontSize="16"
+                Text="Придумайте пароль"/>
+            <PasswordBox
+                MaxLength="50"
+                Style="{DynamicResource passStyle}"
+                Margin="5"
+                VerticalContentAlignment="Center"
+                x:Name="txt_pass"
+                FontSize="16"
+                VerticalAlignment="Center"
+                Height="30"/>
+            <TextBlock
+                Margin="5"
+                Style="{DynamicResource textblockStyle}"
+                FontSize="16"
+                Text="Повторите пароль"/>
+            <PasswordBox
+                MaxLength="50"
+                Style="{DynamicResource passStyle}"
+                Margin="5"
+                VerticalContentAlignment="Center"
+                x:Name="txt_passCopy"
+                FontSize="16"
+                VerticalAlignment="Center"
+                Height="30" PasswordChanged="txt_passCopy_PasswordChanged"/>
+            <TextBlock
+                Margin="5"
+                x:Name="txtCheckPass"
+                Style="{DynamicResource textblockStyle}"
+                FontSize="10"/>
+            <Button
+                Style="{DynamicResource buttonStyle}"
+                Height="30"
+                Width="100"
+                FontSize="16"
+                Margin="10"
+                HorizontalAlignment="Center"
+                Content="Создать"
+                Click="btn_create_Click"
+                Name="btn_create"/>
+        </StackPanel>
+        <Button
+            Style="{DynamicResource buttonStyle}"
+            Name="BackBtn"
+            Grid.Column="0"
+            Grid.Row="4"
+            Margin="5"
+            FontSize="16"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            Content="НАЗАД"
+            Height="30"
+            Width="150"/>
+    </Grid>
+</Page>

@@ -36,5 +36,10 @@ namespace Vacancy.Pages
             NavigationService.Navigate(new Uri("Pages/LogInPage.xaml", UriKind.Relative));
             Models.CInfo.status = 2;
         }
+
+        private void btnGoReg_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Pages/RegisterPage.xaml", UriKind.Relative));
+        }
     }
 }

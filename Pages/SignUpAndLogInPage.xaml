@@ -23,7 +23,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button
-                Style="{DynamicResource buttonStyle}"
+            Click="SignUpBtn_Click"
+            Style="{DynamicResource buttonStyle}"
             Name="SignUpBtn"
             Grid.Column="1"
             Grid.Row="2"

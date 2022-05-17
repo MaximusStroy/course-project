@@ -26,6 +26,11 @@ namespace Vacancy
         {
             InitializeComponent();
 
+            using (RecruitmentAgencyEntities db = new RecruitmentAgencyEntities())
+            {
+                var r = (from e in db.applicants
+                         select e).ToList();
+            }
 
             frame.Navigate(new Pages.SignUpAndLogInPage());
         }
